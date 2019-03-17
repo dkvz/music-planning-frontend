@@ -45,6 +45,15 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 # Project notes
 I can use these "navigation guards" to setup confirmation messages when leaving the planning view without having hit the save button: https://router.vuejs.org/guide/advanced/navigation-guards.html#in-component-guards
 
+## State and stuff
+I could just use the "React standard" props down events up. I've seen a few other possibilities:
+* Event bus. Can be implemented by creating and exporting a new Vue object and using it for its $emit and $on functions.
+* Export an object literal, store everything in it and import it in the components that require it. That object literal is usually called "store" or "state" as one might imagine.
+* Just mutate props. This is almost never mentioned as React sort of imposed its standard state flow and it's not necessarily a bad thing. So I'm not going to do this. Let's leave props non-mutable.
+* VueEx - The VueJS state management lib. I'm not a fan of these as I don't need the added complexity of having atomic actions, dispatchers and whatnot but it could be an interesting thing to learn about.
+
+I' m going to use an object literal to store the authentication data. The rest can probably flow with props down and events up.
+
 # TODO
 - [ ] Add the favicon
 - [ ] The "Home" view can be removed

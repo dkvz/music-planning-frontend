@@ -10,7 +10,8 @@ export default {
     // inside beforeRouterEnter. But we can access it in next.
     console.log(to, from);
     next(self => {
-      console.log(self);
+      // The component instance is in "self".
+      
     });
   }
 }
