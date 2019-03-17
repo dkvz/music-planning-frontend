@@ -3,7 +3,7 @@ import axios from 'axios';
 export default {
   apiUrl: 'http://localhost:8081',
   apiSuffix: '',
-  postLogin: function(username, password, isToken) {
+  postLogin: function(username, password, isToken, successCallback, errorCallback) {
     const body = {
       username
     };
@@ -18,12 +18,13 @@ export default {
           // We should have the token sent back as a
           // cookie.
           console.log(res);
+          successCallback && successCallback(res);
         } else {
-          return null;
+          successCallback && successCallback(null);
         }
       })
       .catch(res => {
-        return null;
+        errorCallback && errorCallback(res.data);
       });
   }
 };
