@@ -1,4 +1,5 @@
 # music-planning-frontend
+Supposed to teach me how to use Vue, but I'm going quick&dirty to release something usable as soon as possible.
 
 ## Project setup
 ```
