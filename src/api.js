@@ -12,7 +12,7 @@ export default {
     } else {
       body.password = password;
     }
-    axios.post(apiUrl + apiSuffix + '/login', body)
+    axios.post(this.apiUrl + this.apiSuffix + '/login', body, {withCredentials: true})
       .then(res => {
         if (res.status >= 200) {
           // We should have the token sent back as a
@@ -24,7 +24,7 @@ export default {
         }
       })
       .catch(res => {
-        errorCallback && errorCallback(res.data);
+        errorCallback && errorCallback(res.response.status);
       });
   }
 };

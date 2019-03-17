@@ -20,12 +20,20 @@
 </template>
 
 <script>
+import api from '@/api';
+
 export default {
   name: 'Login',
   methods: {
     sendLogin: function(e) {
       e.preventDefault();
-      console.log(this.username + ' ' + this.password);
+      api.postLogin(
+        this.username,
+        this.password,
+        false,
+        (res) => console.log(res),
+        (err) => console.log(err) 
+      );
     }
   },
   data: function() {
