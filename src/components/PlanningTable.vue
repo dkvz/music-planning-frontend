@@ -8,21 +8,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">Machin</th>
-        <td>Mark</td>
-        <td>Otto</td>
-      </tr>
-      <tr>
-        <th scope="row">Bidule truc</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-      </tr>
-      <tr>
-        <th scope="row">Brol machin truc</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-      </tr>
+      <PlanningTableRow 
+        v-for="planning in plannings" 
+        :key="planning.uuid"
+        v-on:delete-planning="deletePlanning"
+        :name="planning.name"
+        :planning-id="planning.uuid"
+        :creationDate="planning.creation_date">
+      </PlanningTableRow>
     </tbody>
   </table>
 </template>
@@ -34,6 +27,14 @@ export default {
   name: 'PlanningTable',
   components: {
     PlanningTableRow
+  },
+  props: {
+    plannings: Array
+  },
+  methods: {
+    deletePlanning: function(planningId) {
+      this.$emit('delete-planning', planningId);
+    }
   }
 };
 </script>

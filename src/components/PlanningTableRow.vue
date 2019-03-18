@@ -9,7 +9,9 @@
       {{ creationDate }}
     </td>
     <td class="text-right">
-      
+      <button class="btn btn-alert" aria-label="Supprimer élément" @click="deletePlanning">
+        <font-awesome-icon icon="trash" />
+      </button>
     </td>
   </tr>
 </template>
@@ -21,6 +23,11 @@ export default {
     name: String,
     creationDate: String,
     planningId: String
+  },
+  methods: {
+    deletePlanning: function() {
+      this.$emit('delete-planning', this.planningId);
+    }
   }
 };
 </script>

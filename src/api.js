@@ -11,6 +11,7 @@ export default {
   authenticated: false,
   username: '',
   cookieName: 'token',
+  axiosOptions: { withCredentials: true },
   postLogin: function (username, password, isToken, successCallback, errorCallback) {
     const body = {
       username
@@ -20,7 +21,7 @@ export default {
     } else {
       body.password = password;
     }
-    axios.post(this.apiUrl + this.apiSuffix + '/login', body, { withCredentials: true })
+    axios.post(this.apiUrl + this.apiSuffix + '/login', body, this.axiosOptions)
       .then(res => {
         if (res.status >= 200) {
           // We should have the token sent back as a
@@ -29,6 +30,15 @@ export default {
         } else {
           successCallback && successCallback(null);
         }
+      })
+      .catch(res => {
+        errorCallback && errorCallback(res.response.status);
+      });
+  },
+  getPlannings: function(successCallback, errorCallback) {
+    axios.get(this.apiUrl + this.apiSuffix + '/plannings', this.axiosOptions)
+      .then(res => {
+        successCallback && successCallback(res.data);
       })
       .catch(res => {
         errorCallback && errorCallback(res.response.status);
