@@ -6,7 +6,10 @@
     </div> -->
     <Navbar v-bind:class="{ 'd-none': !isAuthenticated  }"></Navbar>
     <main>
-      <router-view v-on:logged-in="showNavbar" />
+      <router-view 
+        v-on:logged-in="showNavbar" 
+        v-on:logged-out="hideNavbar" 
+        v-bind:is-authenticated="isAuthenticated" />
     </main>
   </div>
 </template>
@@ -23,6 +26,9 @@ export default {
   methods: {
     showNavbar: function() {
       this.isAuthenticated = true;
+    },
+    hideNavbar: function() {
+      this.isAuthenticated = false;
     }
   },
   data: function() {

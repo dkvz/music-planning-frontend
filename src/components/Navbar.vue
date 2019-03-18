@@ -9,6 +9,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/">Liste des plannings</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{name: 'planning', params: {id: 'qsjdfhqskljdf'}}">TEST</router-link>
+        </li>
       </ul>
       <div class="my-2 my-lg-0">
         <button class="btn btn-outline-primary" @click="disconnect">Se déconnecter</button>

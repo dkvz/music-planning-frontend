@@ -72,3 +72,4 @@ I could've avoided this using VueX or an event bus.
 - [ ] Add the favicon
 - [ ] The "Home" view can be removed
 - [ ] Remove the HelloWorld component, it's imported in several places
+- [ ] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
