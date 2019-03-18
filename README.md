@@ -1,6 +1,8 @@
 # music-planning-frontend
 Supposed to teach me how to use Vue, but I'm going quick&dirty to release something usable as soon as possible.
 
+I'm not always sure what I'm doing, but I'm doing it.
+
 ## Project setup
 ```
 npm install
@@ -19,6 +21,8 @@ Once that's done the two import statements in main.js should work (here using th
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 ```
+
+I'm also adding FontAwesome by just following what's on this page: https://fontawesome.com/how-to-use/on-the-web/using-with/vuejs
 
 ### Compiles and hot-reloads for development
 ```
@@ -51,9 +55,13 @@ I could just use the "React standard" props down events up. I've seen a few othe
 * Event bus. Can be implemented by creating and exporting a new Vue object and using it for its $emit and $on functions.
 * Export an object literal, store everything in it and import it in the components that require it. That object literal is usually called "store" or "state" as one might imagine.
 * Just mutate props. This is almost never mentioned as React sort of imposed its standard state flow and it's not necessarily a bad thing. So I'm not going to do this. Let's leave props non-mutable.
-* VueEx - The VueJS state management lib. I'm not a fan of these as I don't need the added complexity of having atomic actions, dispatchers and whatnot but it could be an interesting thing to learn about.
+* VueX - The VueJS state management lib. I'm not a fan of these as I don't need the added complexity of having atomic actions, dispatchers and whatnot but it could be an interesting thing to learn about.
 
 I' m going to use an object literal to store the authentication data. The rest can probably flow with props down and events up.
+
+I ended up storing everything in api.js (everything meaning the authentication status, pretty much) and this was a questionnable decision since I decided later on to add a navbar only present when logged in, which required me to re-emit a logged-in event in Admin.vue.
+
+I could've avoided this using VueX or an event bus.
 
 # TODO
 - [ ] Add the favicon

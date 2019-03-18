@@ -1,11 +1,19 @@
 <template>
-  <h1>Planning List</h1>
+  <div class="container">
+    <h1>Plannings</h1>
+    <PlanningTable></PlanningTable>
+  </div>
 </template>
 
 <script>
+import PlanningTable from '@/components/PlanningTable.vue';
+
 export default {
-  name: 'PlanningList'
-}
+  name: 'PlanningList',
+  components: {
+    PlanningTable
+  }
+};
 </script>
 
 <style>
