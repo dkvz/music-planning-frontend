@@ -24,6 +24,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 I'm also adding FontAwesome by just following what's on this page: https://fontawesome.com/how-to-use/on-the-web/using-with/vuejs
 
+We should be able to just use them in components like so:
+```html
+<font-awesome-icon icon="coffee" />
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

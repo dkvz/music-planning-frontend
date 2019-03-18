@@ -40,7 +40,7 @@ export default {
         this.username,
         this.password,
         false,
-        (res) => {
+        () => {
           // Pretty much means we're connected.
           // The backend is a little weird.
           api.authenticated = true;
