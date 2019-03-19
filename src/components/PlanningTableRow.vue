@@ -1,12 +1,12 @@
 <template>
   <tr>
     <th scope="row">
-      <router-link :to="{name: planning, params: {id: planningId}}">
+      <router-link :to="{name: 'planning', params: {id: planningId}}">
         {{ name }}
       </router-link>
     </th>
     <td>
-      {{ creationDate }}
+      {{ creationDate.toLocaleDateString() }}
     </td>
     <td class="text-right">
       <button class="btn btn-alert" aria-label="Supprimer élément" @click="deletePlanning">
@@ -21,7 +21,7 @@ export default {
   name: 'PlanningTableRow',
   props: {
     name: String,
-    creationDate: String,
+    creationDate: Date,
     planningId: String
   },
   methods: {

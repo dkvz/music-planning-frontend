@@ -29,6 +29,8 @@ We should be able to just use them in components like so:
 <font-awesome-icon icon="coffee" />
 ```
 
+**You need to import any icon you want to use manually in main.js**, which is both great and annoying.
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
@@ -67,6 +69,8 @@ I' m going to use an object literal to store the authentication data. The rest c
 I ended up storing everything in api.js (everything meaning the authentication status, pretty much) and this was a questionnable decision since I decided later on to add a navbar only present when logged in, which required me to re-emit a logged-in event in Admin.vue.
 
 I could've avoided this using VueX or an event bus.
+
+=> The lesson I learned is to just always use VueX unless your app is extremely simple and only gets data. Preferably in an unauthenticated manner.
 
 # TODO
 - [ ] Add the favicon

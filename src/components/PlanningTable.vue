@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th scope="col">Nom</th>
-        <th scope="col">Date de création</th>
+        <th scope="col">Date création</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -14,7 +14,7 @@
         v-on:delete-planning="deletePlanning"
         :name="planning.name"
         :planning-id="planning.uuid"
-        :creationDate="planning.creation_date">
+        :creation-date="planning.jsDate">
       </PlanningTableRow>
     </tbody>
   </table>

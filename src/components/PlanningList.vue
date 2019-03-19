@@ -33,7 +33,10 @@ export default {
       // from the API.
       this.warningMessage = '';
       api.getPlannings(
-        (data) => this.plannings = data,
+        (data) => this.plannings = data.map(e => {
+          e.jsDate = new Date(e.created_date);
+          return e;
+        }),
         (status) => {
           switch(status) {
             case 403:
