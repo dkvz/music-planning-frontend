@@ -11,6 +11,7 @@ npm install
 ## Dependencies and stuff
 To actually create the project I used the Vue CLI and `vue create app-name`, then I added the router using `vue add router`.
 
+### Bootstrap
 To get started fast I'm using Bootstrap:
 ```
 npm install bootstrap jquery popper.js
@@ -22,6 +23,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 ```
 
+### FontAwesome
 I'm also adding FontAwesome by just following what's on this page: https://fontawesome.com/how-to-use/on-the-web/using-with/vuejs
 
 We should be able to just use them in components like so:
@@ -30,6 +32,14 @@ We should be able to just use them in components like so:
 ```
 
 **You need to import any icon you want to use manually in main.js**, which is both great and annoying.
+
+### Modal
+There's a lot of stuff to add for the Bootstrap modal to work, especially since it's also supposed to be enabled through JQuery.
+
+So I'm using a modified modal component from here: https://vuejs.org/v2/examples/modal.html
+
+### Spinners
+I'm using the spinners from here: https://github.com/greyby/vue-spinner
 
 ### Compiles and hot-reloads for development
 ```
@@ -78,3 +88,4 @@ I could've avoided this using VueX or an event bus.
 - [ ] Remove the HelloWorld component, it's imported in several places
 - [ ] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [ ] Add a refresh button for the PlanningList component
+- [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js

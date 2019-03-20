@@ -44,6 +44,27 @@ export default {
         errorCallback && errorCallback(res.response.status);
       });
   },
+  postPlanning: function(name, successCallback, errorCallback) {
+    axios.post(this.apiUrl + this.apiSuffix + '/plannings', {name}, this.axiosOptions)
+      .then(res => {
+        successCallback && successCallback(res.data);
+      })
+      .catch(res => {
+        errorCallback && errorCallback(res.response.status);
+      });
+  },
+  deletePlanning: function(planningId, successCallback, errorCallback) {
+    axios.delete(
+      this.apiUrl + this.apiSuffix + '/plannings', 
+      {planning_id: planningId}, 
+      this.axiosOptions
+    ).then(() => {
+      successCallback && successCallback();
+    })
+    .catch(res => {
+      errorCallback && errorCallback(res.response.status);
+    });
+  },
   getTokenFromCookie: function (document) {
     return this._getCookie(this.cookieName, document);
   },
