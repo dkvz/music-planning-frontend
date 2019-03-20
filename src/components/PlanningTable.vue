@@ -20,8 +20,8 @@
           </th>
           <td></td>
           <td class="text-right">
-            <rotate-loader :loading="saving"></rotate-loader>
-            <button class="btn btn-success" :disabled="saving" aria-label="Enregistrer" title="Enregistrer" type="submit">
+            <rotate-loader class="p-spinner" :loading="saving"></rotate-loader>
+            <button class="btn btn-success mr-1" :disabled="saving" aria-label="Enregistrer" title="Enregistrer" type="submit">
               <font-awesome-icon icon="save" />
             </button>
             <button class="btn btn-danger" :disabled="saving" aria-label="Annuler" title="Annuler" type="reset" @click="hideForm">
@@ -92,3 +92,9 @@ export default {
 };
 </script>
 
+<style>
+.p-spinner {
+  display: inline-block;
+
+}
+</style>

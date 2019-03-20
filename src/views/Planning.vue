@@ -18,9 +18,6 @@ export default {
       // The component instance is in "self".
       
     });
-  },
-  mounted: function() {
-    console.log(this.isAuthenticated);
   }
 }
 </script>

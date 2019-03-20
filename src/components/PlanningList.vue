@@ -64,6 +64,7 @@ export default {
               this.$router.push({name: 'not-allowed'});
               break;
             default:
+              this.errorMessage = true;
               this.message = `Erreur inconnue bizarre, 
                 l'API a répondu avec un statut ${status}.`;
           }
@@ -79,12 +80,13 @@ export default {
           this.$refs.planningTable.hideForm();
         },
         status => {
-          // I chose to keep showing the form.
+          this.$refs.planningTable.hideForm();
           switch(status) {
             case 403:
               this.$router.push({name: 'not-allowed'});
               break;
             default:
+              this.errorMessage = true;
               this.message = `Erreur inconnue bizarre, 
                 l'API a répondu avec un statut ${status}.`
           }
@@ -97,11 +99,14 @@ export default {
     },
     confirmDelete: function() {
       // To make things easy we just refresh at the end.
+      this.$refs.confirmDelete.hide();
       api.deletePlanning(
         this.toDelete,
         () => {
+          this.errorMessage = false;
           this.message = 'Planning supprimé.';
           this.toDelete = '';
+          this.loadData();
         },
         (status) => {
           this.toDelete = '';
@@ -110,6 +115,7 @@ export default {
               this.$router.push({name: 'not-allowed'});
               break;
             default:
+              this.errorMessage = true;
               this.message = `Erreur inconnue bizarre, 
                 l'API a répondu avec un statut ${status}.`
           }

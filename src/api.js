@@ -55,8 +55,7 @@ export default {
   },
   deletePlanning: function(planningId, successCallback, errorCallback) {
     axios.delete(
-      this.apiUrl + this.apiSuffix + '/plannings', 
-      {planning_id: planningId}, 
+      `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`, 
       this.axiosOptions
     ).then(() => {
       successCallback && successCallback();
