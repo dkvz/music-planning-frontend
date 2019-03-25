@@ -64,6 +64,15 @@ export default {
       errorCallback && errorCallback(res.response.status);
     });
   },
+  getFullPlanning: function(planningId, successCallback, errorCallback) {
+    axios.get(
+      `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`,
+      this.axiosOptions
+    ).then((res) => {
+      successCallback && successCallback(res.data);
+    })
+    .catch(res => errorCallback && errorCallback(res.response.status));
+  },
   getTokenFromCookie: function (document) {
     return this._getCookie(this.cookieName, document);
   },

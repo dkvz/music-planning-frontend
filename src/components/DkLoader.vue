@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" class="jumbotron center-it">
-    <h1 class="display-4">Chargement...</h1>
+    <h1 class="display-5">Chargement...</h1>
   </div>
 </template>
 
@@ -19,7 +19,6 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
 
 @keyframes scaler {
   0% {transform: scale(1)}   

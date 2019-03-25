@@ -82,6 +82,9 @@ I could've avoided this using VueX or an event bus.
 
 => The lesson I learned is to just always use VueX unless your app is extremely simple and only gets data. Preferably in an unauthenticated manner.
 
+# More notes
+* There's a shorthand for applying preventDefault to form submit events declaratively.
+
 # TODO
 - [ ] Add the favicon
 - [ ] The "Home" view can be removed
