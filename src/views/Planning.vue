@@ -1,5 +1,16 @@
 <template>
   <div class="container py-3">
+    <Modal ref="eventModal">
+      <template v-slot:header>
+        <strong>Ajouter un évènement</strong>
+      </template>
+      <template v-slot:main>
+        <AddEventForm 
+          :edit-mode="eventEditMode"
+          :planning-id="planningId">
+        </AddEventForm>
+      </template>
+    </Modal>
     <DkLoader :loading="loading"></DkLoader>
     <h1 v-if="planningName">{{ planningName }}</h1>
     <div v-if="message.text" class="alert" :class="message.className">
@@ -17,7 +28,12 @@
           </DkAutocomplete>
         </div>
       </div>
-      
+      <div v-if="isAuthenticated" class="bg-light p-3">
+        <button class="btn btn-primary" @click="showAddEventForm">
+          <font-awesome-icon icon="plus-circle" />
+          Ajouter un évènement
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +44,8 @@ import instruments from '@/instruments';
 import DkLoader from '@/components/DkLoader.vue';
 import DkAutocomplete from '@/components/DkAutocomplete.vue';
 import NameInput from '@/components/NameInput.vue';
+import Modal from '@/components/Modal.vue';
+import AddEventForm from '@/components/AddEventForm.vue';
 
 export default {
   name: 'Planning',
@@ -35,7 +53,11 @@ export default {
     isAuthenticated: Boolean
   },
   components: {
-    DkLoader, DkAutocomplete, NameInput
+    DkLoader, 
+    DkAutocomplete, 
+    NameInput, 
+    Modal,
+    AddEventForm
   },
   data: function() {
     return {
@@ -47,7 +69,8 @@ export default {
         text: '',
         className: 'alert-warning'
       },
-      instruments
+      instruments,
+      eventEditMode: false
     };
   },
   methods: {
@@ -89,6 +112,9 @@ export default {
           }
         }
       );
+    },
+    showAddEventForm: function() {
+
     }
   },
   beforeRouteEnter: function(to, from, next) {
