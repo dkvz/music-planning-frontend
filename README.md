@@ -94,3 +94,4 @@ I could've avoided this using VueX or an event bus.
 - [ ] Add a refresh button for the PlanningList component
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned
+- [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false

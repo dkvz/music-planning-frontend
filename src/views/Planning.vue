@@ -48,6 +48,7 @@ import DkAutocomplete from '@/components/DkAutocomplete.vue';
 import NameInput from '@/components/NameInput.vue';
 import Modal from '@/components/Modal.vue';
 import AddEventForm from '@/components/AddEventForm.vue';
+import { setTimeout } from 'timers';
 
 export default {
   name: 'Planning',
@@ -134,11 +135,27 @@ export default {
       api.postEvent(
         evt,
         () => {
-
-          this.loading = false;
+          // Basically means it got inserted.
+          // That's what we're going to assume alright.
+          this.showMessage('Evènement ajouté', 'alert-success');
+          setTimeout(() => this.showMessage(''), 5000);
+          this.getFullPlanning();
         },
         (status) => {
-
+          switch(status) {
+            case 404:
+              this.showMessage(
+                'Cet évènement n\'existe pas ou plus', 'alert-warning'
+              );
+              break;
+            case 403:
+              this.$router.push({name: 'not-allowed'});
+              break;
+            default:
+              this.errorMessage = true;
+              this.message = `Erreur inconnue bizarre, 
+                l'API a répondu avec un statut ${status}.`;
+          }
           this.loading = false;
         }
       );
