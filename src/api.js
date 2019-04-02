@@ -5,6 +5,9 @@ import axios from 'axios';
 // Even the token is supposed to be added to request
 // as a cookie with no action needed.
 
+// TODO The object is full of stuff that can be refactored.
+// We need generic functions to post, for instance.
+
 export default {
   apiUrl: 'http://localhost:8081',
   apiSuffix: '',
@@ -46,6 +49,15 @@ export default {
   },
   postPlanning: function(name, successCallback, errorCallback) {
     axios.post(this.apiUrl + this.apiSuffix + '/plannings', {name}, this.axiosOptions)
+      .then(res => {
+        successCallback && successCallback(res.data);
+      })
+      .catch(res => {
+        errorCallback && errorCallback(res.response.status);
+      });
+  },
+  postEvent: function(evt, successCallback, errorCallback) {
+    axios.post(this.apiUrl + this.apiSuffix + '/events', evt, this.axiosOptions)
       .then(res => {
         successCallback && successCallback(res.data);
       })

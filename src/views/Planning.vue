@@ -1,13 +1,15 @@
 <template>
   <div class="container py-3">
-    <Modal ref="eventModal">
+    <Modal ref="eventModal" no-footer>
       <template v-slot:header>
         <strong>Ajouter un évènement</strong>
       </template>
       <template v-slot:main>
         <AddEventForm 
           :edit-mode="eventEditMode"
-          :planning-id="planningId">
+          :planning-id="planningId"
+          @event-cancel="cancelEvent"
+          @event-submit="submitEvent">
         </AddEventForm>
       </template>
     </Modal>
@@ -114,7 +116,32 @@ export default {
       );
     },
     showAddEventForm: function() {
+      this.eventEditMode = false;
+      this.$refs.eventModal.show();
+    },
+    hideEventForm: function() {
+      this.$refs.eventModal.hide();
+    },
+    cancelEvent: function() {
+      this.hideEventForm();
+    },
+    submitEvent: function(evt) {
+      // It doesn't matter if editing or not, the
+      // backend will figure it out by the presence
+      // of the "id" property.
+      this.loading = true;
+      this.scrollToTop();
+      api.postEvent(
+        evt,
+        () => {
 
+          this.loading = false;
+        },
+        (status) => {
+
+          this.loading = false;
+        }
+      );
     }
   },
   beforeRouteEnter: function(to, from, next) {

@@ -32,7 +32,7 @@
         v-model="description">
       </textarea>
     </div>
-    <div>
+    <div class="text-right">
       <button class="btn btn-primary mr-2" type="submit">Enregistrer</button>
       <button class="btn btn-warning" @click="cancel">Annuler</button>
     </div>
@@ -53,8 +53,7 @@ export default {
   data: function() {
     return {
       name: '',
-      eventId: -1,
-      saving: false,
+      id: -1,
       category: 1,
       categories: [
         {id: 1, name: 'Garde'},
@@ -72,23 +71,23 @@ export default {
         description: this.description,
         eventDate: this.date
       };
-      if (this.eventId > 0) {
-        evt.eventId = this.eventId;
+      if (this.id > 0) {
+        evt.id = this.id;
       }
       this.$emit('event-submit', evt);
     },
     cancel: function() {
       this.$emit('event-cancel');
     },
-    setValues: function(eventId, name, category, description, eventDate) {
-      this.eventId = eventId;
+    setValues: function(id, name, category, description, eventDate) {
+      this.id = id;
       this.name = name;
       this.category = category;
       this.description = description;
       this.setDate(eventDate);
     },
     resetForm: function() {
-      this.eventId = -1;
+      this.id = -1;
       this.name = '';
       this.category = 1;
       this.description = '';

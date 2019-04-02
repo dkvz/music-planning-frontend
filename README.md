@@ -93,3 +93,4 @@ I could've avoided this using VueX or an event bus.
 - [ ] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [ ] Add a refresh button for the PlanningList component
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
+- [ ] Write a recap of interesting Vue concepts and lessons learned

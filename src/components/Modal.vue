@@ -16,7 +16,7 @@
             </slot>
           </div>
 
-          <div class="card-footer text-right">
+          <div class="card-footer text-right" v-if="!noFooter">
             <slot name="footer">
               default footer
               <button class="btn btn-primary" @click="hide">
@@ -37,6 +37,9 @@
  */
 export default {
   name: 'Modal',
+  props: {
+    noFooter: Boolean
+  },
   data: function() {
     return {
       showModal: false
