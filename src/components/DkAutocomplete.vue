@@ -43,7 +43,8 @@ export default {
     // properties "name" and "code".
     suggestions: Array,
     placeholder: String,
-    label: String
+    label: String,
+    selected: String
   },
   methods: {
     _blurred: function() {
@@ -73,6 +74,17 @@ export default {
   },
   mounted: function() {
     this.inputId = this._uid;
+  },
+  watch: {
+    selected: function(newVal) {
+      if (newVal) {
+        const sugg = this.suggestions.filter(
+          e => e.code == newVal
+        );
+        this.selectedCode = sugg.code;
+        this.value = sugg.name;
+      }   
+    }
   }
 }
 </script>

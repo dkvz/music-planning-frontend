@@ -1,4 +1,4 @@
-export default [
+const instruments = [
   {
     name: 'Inconnu',
     code: 'inco'
@@ -144,3 +144,17 @@ export default [
     code: 'clav'
   }
 ];
+
+export default instruments;
+
+// At some point I noticed having some
+// kind of lookup table would be nice.
+const instrumentCodes = instruments.reduce(
+  (acc, i) => {
+    acc[i.code] = i.name;
+    return acc;
+  },
+  {}
+);
+
+export { instrumentCodes };
