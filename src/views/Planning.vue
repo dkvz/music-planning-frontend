@@ -130,8 +130,11 @@ export default {
       // It doesn't matter if editing or not, the
       // backend will figure it out by the presence
       // of the "id" property.
+      this.hideEventForm();
       this.loading = true;
       this.scrollToTop();
+      evt.event_date = evt.eventDate.getTime();
+      evt.planning_id = this.planningId;
       api.postEvent(
         evt,
         () => {
@@ -145,16 +148,18 @@ export default {
           switch(status) {
             case 404:
               this.showMessage(
-                'Cet évènement n\'existe pas ou plus', 'alert-warning'
+                'Euuuh... On me dit que le planning n\'existe plus?', 'alert-danger'
               );
               break;
             case 403:
               this.$router.push({name: 'not-allowed'});
               break;
             default:
-              this.errorMessage = true;
-              this.message = `Erreur inconnue bizarre, 
-                l'API a répondu avec un statut ${status}.`;
+              this.showMessage(
+                `Erreur inconnue bizarre, 
+                l'API a répondu avec un statut ${status}.`,
+                'alert-danger'
+              );
           }
           this.loading = false;
         }
