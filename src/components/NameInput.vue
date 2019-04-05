@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label :for="inputId">Votre nom</label>
+    <label :for="inputId">{{ label || 'Votre nom' }}</label>
     <input 
       type="text"
       :id="inputId"
       class="form-control"
-      placeholder="Entrez votre nom..."
+      :placeholder="placeholder || 'Entrez votre nom...'"
       v-model="value">
   </div>
 </template>
@@ -13,6 +13,10 @@
 <script>
 export default {
   name: 'NameInput',
+  props: {
+    placeholder: String,
+    label: String
+  },
   data: function() {
     return {
       inputId: null,

@@ -13,20 +13,49 @@
         </AddEventForm>
       </template>
     </Modal>
+    <Modal ref="presenceModal" no-footer>
+      <template v-slot:header>
+        <strong>Ajouter une personne présente</strong>
+      </template>
+      <template v-slot:main>
+        <form @submit.prevent="addPresence">
+          <NameInput class="form-group"
+            ref="presenceName"
+            placeholder="Entrez un nom..."
+            label="Nom de la personne">
+          </NameInput>
+          <DkAutocomplete :suggestions="instruments" 
+            class="form-group"
+            label="Instrument" 
+            placeholder="Entrez instrument..."
+            @item-selected="setSelectedInstrument">
+          </DkAutocomplete>
+        </form>
+      </template>
+      <template v-slot:footer>
+        <button class="btn btn-primary mr-2" @click="addPresence">
+          OK
+        </button>
+        <button class="btn btn-secondary" @click="$refs.presenceModal.hide()">
+          Annuler
+        </button>
+      </template>
+    </Modal>
     <DkLoader :loading="loading"></DkLoader>
     <h1 v-if="planningName">{{ planningName }}</h1>
     <div v-if="message.text" class="alert" :class="message.className">
       {{ message.text }}
     </div>
     <div v-if="planningName">
-      <div v-if="!isAuthenticated" class="card">
+      <div v-if="!isAuthenticated" class="card event-row">
         <div class="card-header">Vous êtes qui?</div>
         <div class="card-body row">
           <NameInput ref="mainNameInput" class="col-lg-6"></NameInput>
           <DkAutocomplete :suggestions="instruments" 
             class="col-lg-6"
             label="Votre instrument" 
-            placeholder="Entrez instrument...">
+            placeholder="Entrez instrument..."
+            @item-selected="setSelectedInstrument">
           </DkAutocomplete>
         </div>
       </div>
@@ -37,7 +66,17 @@
         </button>
       </div>
 
-      
+      <Event v-for="event in events" :key="event.id"
+        :is-authenticated="isAuthenticated"
+        :id="event.id"
+        :name="event.name"
+        :description="event.description"
+        :event-date="new Date(event.event_date)"
+        :selected-instrument="instrumentSelected && instrumentSelected.code"
+        :presences="event.presences"
+        @add-presence="showPresenceModal"
+        className="event-row">
+      </Event>
 
     </div>
   </div>
@@ -51,7 +90,7 @@ import DkAutocomplete from '@/components/DkAutocomplete.vue';
 import NameInput from '@/components/NameInput.vue';
 import Modal from '@/components/Modal.vue';
 import AddEventForm from '@/components/AddEventForm.vue';
-import { setTimeout } from 'timers';
+import Event from '@/components/Event.vue';
 
 export default {
   name: 'Planning',
@@ -63,7 +102,8 @@ export default {
     DkAutocomplete, 
     NameInput, 
     Modal,
-    AddEventForm
+    AddEventForm,
+    Event
   },
   data: function() {
     return {
@@ -76,15 +116,18 @@ export default {
         className: 'alert-warning'
       },
       instruments,
-      eventEditMode: false
+      eventEditMode: false,
+      instrumentSelected: null,
+      currentEventId: null
     };
   },
   methods: {
-    showMessage: function(text, className) {
+    showMessage: function(text, className, autoHide = false) {
       this.message.text = text;
       this.message.className = className;
       // Scroll to top:
       this.scrollToTop();
+      if (autoHide) setTimeout(() => this.showMessage(''), 5000);
     },
     scrollToTop: function() {
       window.scrollTo(0, 0);
@@ -143,8 +186,7 @@ export default {
         () => {
           // Basically means it got inserted.
           // That's what we're going to assume alright.
-          this.showMessage('Evènement ajouté', 'alert-success');
-          setTimeout(() => this.showMessage(''), 5000);
+          this.showMessage('Evènement ajouté', 'alert-success', true);
           this.getFullPlanning();
         },
         (status) => {
@@ -167,6 +209,74 @@ export default {
           this.loading = false;
         }
       );
+    },
+    setSelectedInstrument: function(instr) {
+      this.instrumentSelected = instr;
+    },
+    addPresence: function() {
+      // Get the name from refs.
+      // Selected instrument is in this.instrumentSelected.
+      // If no instrument is selected, use the unknown one.
+      // Check that we got the name:
+      this.showMessage('');
+      const name = this.$refs.presenceName.getValue();
+      // I'm putting the event ID in a variable in case it 
+      // changes during the web request for some reason. 
+      // Yeah I'm like that.
+      const curEventId = this.currentEventId;
+      const curInstrument = this.instrumentSelected || instruments[0].code;
+      this.$refs.presenceModal.hide();
+      if (name) {
+        this.loading = true;
+        api.postPresence(
+          curEventId,
+          name,
+          curInstrument,
+          (data) => {
+            // We should add the new presence to the current
+            // full array.
+            const curEvt = this.events.filter(
+              evt => evt.id == curEventId
+            )[0];
+            if (curEvt) {
+              curEvt.presences.push({
+                id: data.id,
+                name,
+                instrument_code: curInstrument
+              });
+            }  
+            this.loading = false;
+          },
+          (status) => {
+            this.scrollToTop();
+            switch(status) {
+              case 400:
+                this.showMessage(
+                  'L\'évènement n\'existe plus ou n\'est pas valide.', 
+                  'alert-danger'
+                );
+                break;
+              case 403:
+                this.$router.push({name: 'not-allowed'});
+                break;
+              default:
+                this.showMessage(
+                  `Erreur inconnue bizarre, 
+                  l'API a répondu avec un statut ${status}.`,
+                  'alert-danger'
+                );
+            }
+            this.loading = false;
+          }
+        );
+      } else {
+        this.showMessage('Le nom était vide, merci de réessayer', 'alert-warning');
+      }
+    },
+    showPresenceModal: function(eventId) {
+      this.instrumentSelected = null;
+      this.currentEventId = eventId;
+      this.$refs.presenceModal.show();
     }
   },
   beforeRouteEnter: function(to, from, next) {
@@ -185,5 +295,7 @@ export default {
 </script>
 
 <style>
-
+.event-row {
+  margin-bottom: 2rem; 
+}
 </style>

@@ -65,6 +65,23 @@ export default {
         errorCallback && errorCallback(res.response.status);
       });
   },
+  postPresence: function(eventId, name, instrumentCode, successCallback, errorCallback) {
+    axios.post(
+      this.apiUrl + this.apiSuffix + '/presence',
+      {
+        event_id: eventId,
+        name,
+        instrument_code: instrumentCode,
+        presence: true
+      },
+      this.axiosOptions)
+      .then((res) => {
+        successCallback && successCallback(res.data);
+      })
+      .catch(res => {
+        errorCallback && errorCallback(res.response.status);
+      });
+  },
   deletePlanning: function(planningId, successCallback, errorCallback) {
     axios.delete(
       `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`, 

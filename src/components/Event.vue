@@ -1,10 +1,10 @@
 <template>
-  <div class="row">
+  <div class="row container" :class="className">
 
     <div :class="'card col col-lg-3 col-md-4 col-ms-12 ' + categoryClass">
-      <div class="card-header">
-        <span>{{ name }}</span>
-        <div class="float-right" v-if="isAuthenticated">
+      <div class="card-header event-header">
+        <h5>{{ name }}</h5>
+        <div v-if="isAuthenticated">
           <button class="btn btn-primary" title="Modifier">
             <font-awesome-icon icon="edit" />
           </button>
@@ -22,7 +22,7 @@
     <div class="col col-lg-1 col-md-1 d-none d-sm-none d-md-block"></div>
 
     <div class="col border-secondary">
-      <h3>Présences</h3>
+      <h5>Présences</h5>
       <div class="row">
 
         <div class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white"
@@ -45,7 +45,10 @@
           </div>
         </div>
         <div v-else class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white">
-          <!-- Button to add a person when authenticated -->
+          <button class="btn btn-primary" @click="addPresence">
+            <font-awesome-icon icon="plus-circle" />
+            Ajouter
+          </button>
         </div>
 
         <div class="col col-sm-12 col-lg-2 col-md-3"
@@ -54,7 +57,10 @@
           <h5>{{ instrumentGroup.name }}</h5>
           <ul class="presence-list">
             <li v-for="presence in instrumentGroup.data" :key="presence.id">
-
+              <span>{{ presence.name }}</span>
+              <button class="btn btn-danger" :data-pid="presence.id" @click="removePresence">
+                <font-awesome-icon icon="trash" />
+              </button>
             </li>
           </ul>
         </div>
@@ -67,7 +73,7 @@
 
 <script>
 import DkAutocomplete from '@/components/DkAutocomplete.vue';
-import { instrumentCodes } from '@/instruments';
+import instruments, { instrumentCodes } from '@/instruments';
 
 export default {
   name: 'Event',
@@ -78,9 +84,9 @@ export default {
     category: Number,
     description: String,
     eventDate: Date,
-    instruments: Array,
     selectedInstrument: String,
-    presences: Array
+    presences: Array,
+    className: String
   },
   components: {
     DkAutocomplete
@@ -94,14 +100,21 @@ export default {
       ],
       // Can't I just actually use this._uid?
       uid: null,
-      present: false
+      present: false,
+      instruments
     };
   },
   mounted: function() {
     this.uid = this._uid;
   },
   methods: {
-
+    addPresence: function() {
+      // We have to send the event ID along.
+      this.$emit('add-presence', this.id);
+    },
+    removePresence: function(e) {
+      this.$emit('remove-presence', Number(e.target.getAttribute('data-pid')));
+    }
   },
   computed: {
     categoryClass: function() {
@@ -180,7 +193,7 @@ export default {
 </script>
 
 <style>
-.presence-list li {
+.presence-list li, .event-header {
   display: flex;
   justify-content: space-between;
 }

@@ -1,3 +1,6 @@
+// Careful that the first element
+// in the table is considered the
+// default instrument.
 const instruments = [
   {
     name: 'Inconnu',
