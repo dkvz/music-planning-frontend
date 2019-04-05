@@ -92,6 +92,7 @@ export default {
 <style>
 ul.autocomplete-list {
   position: fixed;
+  z-index: 999;
 }
 
 ul.autocomplete-list li {

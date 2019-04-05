@@ -1,70 +1,80 @@
 <template>
-  <div class="row container" :class="className">
+  <div class="row" :class="className">
 
-    <div :class="'card col col-lg-3 col-md-4 col-ms-12 ' + categoryClass">
-      <div class="card-header event-header">
-        <h5>{{ name }}</h5>
-        <div v-if="isAuthenticated">
-          <button class="btn btn-primary" title="Modifier">
-            <font-awesome-icon icon="edit" />
-          </button>
-          <button class="btn btn-primary" title="Supprimer">
-            <font-awesome-icon icon="trash" />
-          </button>
+    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+      <dir :class="'card no-padding ' + categoryClass">
+        <div class="card-header event-header">
+          <h5>{{ name }}</h5>
+          <div v-if="isAuthenticated">
+            <button class="btn btn-primary" title="Modifier">
+              <font-awesome-icon icon="edit" />
+            </button>
+            <button class="btn btn-primary" title="Supprimer">
+              <font-awesome-icon icon="trash" />
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Date: {{ formattedDate }}</h5>
-        <p class="card-text">{{ description }}</p>
-      </div>
+        <div class="card-body">
+          <h5 class="card-title">Date: {{ formattedDate }}</h5>
+          <p class="card-text">{{ description }}</p>
+        </div>
+      </dir>
     </div>
 
     <div class="col col-lg-1 col-md-1 d-none d-sm-none d-md-block"></div>
 
-    <div class="col border-secondary">
-      <h5>Présences</h5>
-      <div class="row">
-
-        <div class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white"
-          v-if="!isAuthenticated">
-          <div class="form-group">
-            <input type="checkbox" 
-              class="form-check-input" 
-              :id="'chkboxPres' + this.uid" 
-              v-model="present">
-            <label class="form-check-label" :for="'chkboxPres' + this.uid">
-              Présent!
-            </label>
-          </div>
-          <div class="form-group">
-            <DkAutocomplete :suggestions="instruments"
-              label="Instrument"
-              placeholder="Votre instrument..."
-              :selected="selectedInstrument">
-            </DkAutocomplete>
-          </div>
+    <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          Présences
         </div>
-        <div v-else class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white">
-          <button class="btn btn-primary" @click="addPresence">
-            <font-awesome-icon icon="plus-circle" />
-            Ajouter
-          </button>
-        </div>
+        <div class="card-body">
 
-        <div class="col col-sm-12 col-lg-2 col-md-3"
-          v-for="instrumentGroup in orderedPresences" 
-          :key="instrumentGroup.code">
-          <h5>{{ instrumentGroup.name }}</h5>
-          <ul class="presence-list">
-            <li v-for="presence in instrumentGroup.data" :key="presence.id">
-              <span>{{ presence.name }}</span>
-              <button class="btn btn-danger" :data-pid="presence.id" @click="removePresence">
-                <font-awesome-icon icon="trash" />
+           <div class="row">
+
+            <div class="col col-sm-12 col-xs-12 col-lg-5 col-md-6 bg-light"
+              v-if="!isAuthenticated">
+              <div class="form-check presence-checkbox">
+                <input type="checkbox"  
+                  :id="'chkboxPres' + this.uid" 
+                  class="form-check-input"
+                  v-model="present">
+                <label :for="'chkboxPres' + this.uid" 
+                  class="form-check-label">
+                  Présent!
+                </label>
+              </div>
+              <div class="form-group">
+                <DkAutocomplete :suggestions="instruments"
+                  placeholder="Votre instrument..."
+                  :selected="selectedInstrument">
+                </DkAutocomplete>
+              </div>
+            </div>
+            <div v-else class="col col-sm-12 col-xs-12 col-lg-3 col-md-4">
+              <button class="btn btn-primary" @click="addPresence">
+                <font-awesome-icon icon="plus-circle" />
+                Ajouter
               </button>
-            </li>
-          </ul>
-        </div>
+            </div>
 
+            <div class="col col-sm-12 col-lg-2 col-md-3"
+              v-for="instrumentGroup in orderedPresences" 
+              :key="instrumentGroup.code">
+              <h5>{{ instrumentGroup.name }}</h5>
+              <ul class="presence-list">
+                <li v-for="presence in instrumentGroup.data" :key="presence.id">
+                  <span>{{ presence.name }}</span>
+                  <button class="btn btn-danger" :data-pid="presence.id" @click="removePresence">
+                    <font-awesome-icon icon="trash" />
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -196,5 +206,13 @@ export default {
 .presence-list li, .event-header {
   display: flex;
   justify-content: space-between;
+}
+.no-padding {
+  padding: 0;
+  margin: 0;
+}
+.presence-checkbox {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 </style>
