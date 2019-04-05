@@ -22,7 +22,7 @@
     <div class="col col-lg-1 col-md-1 d-none d-sm-none d-md-block"></div>
 
     <div class="col border-secondary">
-      <h5>Présences</h5>
+      <h3>Présences</h3>
       <div class="row">
 
         <div class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white"
@@ -43,6 +43,20 @@
               :selected="selectedInstrument">
             </DkAutocomplete>
           </div>
+        </div>
+        <div v-else class="col col-sm-12 col-lg-3 col-md-4 bg-secondary text-white">
+          <!-- Button to add a person when authenticated -->
+        </div>
+
+        <div class="col col-sm-12 col-lg-2 col-md-3"
+          v-for="instrumentGroup in orderedPresences" 
+          :key="instrumentGroup.code">
+          <h5>{{ instrumentGroup.name }}</h5>
+          <ul class="presence-list">
+            <li v-for="presence in instrumentGroup.data" :key="presence.id">
+
+            </li>
+          </ul>
         </div>
 
       </div>
@@ -166,5 +180,8 @@ export default {
 </script>
 
 <style>
-
+.presence-list li {
+  display: flex;
+  justify-content: space-between;
+}
 </style>
