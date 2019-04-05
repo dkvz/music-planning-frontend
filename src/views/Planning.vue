@@ -13,7 +13,7 @@
         </AddEventForm>
       </template>
     </Modal>
-    <Modal ref="presenceModal" no-footer>
+    <Modal ref="presenceModal">
       <template v-slot:header>
         <strong>Ajouter une personne présente</strong>
       </template>
@@ -59,7 +59,7 @@
           </DkAutocomplete>
         </div>
       </div>
-      <div v-if="isAuthenticated" class="bg-light p-3">
+      <div v-if="isAuthenticated" class="bg-light p-3 my-3">
         <button class="btn btn-primary" @click="showAddEventForm">
           <font-awesome-icon icon="plus-circle" />
           Ajouter un évènement

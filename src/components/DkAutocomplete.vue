@@ -81,8 +81,10 @@ export default {
         const sugg = this.suggestions.filter(
           e => e.code == newVal
         );
-        this.selectedCode = sugg.code;
-        this.value = sugg.name;
+        if (sugg && sugg.length > 0) {
+          this.selectedCode = sugg[0].code;
+          this.value = sugg[0].name;
+        }
       }   
     }
   }

@@ -9,7 +9,7 @@
             <button class="btn btn-primary" title="Modifier">
               <font-awesome-icon icon="edit" />
             </button>
-            <button class="btn btn-primary" title="Supprimer">
+            <button class="btn btn-danger" title="Supprimer">
               <font-awesome-icon icon="trash" />
             </button>
           </div>
