@@ -133,7 +133,16 @@ export default {
       this.$emit('remove-event', this.id);
     },
     editEvent: function() {
-      this.$emit('edit-event', this.id);
+      this.$emit(
+        'edit-event', 
+        {
+          id: this.id,
+          name: this.name,
+          category: this.category,
+          description: this.description,
+          eventDate: this.eventDate
+        }
+      );
     }
   },
   computed: {

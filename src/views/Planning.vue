@@ -8,6 +8,7 @@
         <AddEventForm 
           :edit-mode="eventEditMode"
           :planning-id="planningId"
+          :event="eventToEdit"
           @event-cancel="cancelEvent"
           @event-submit="submitEvent">
         </AddEventForm>
@@ -64,12 +65,14 @@
           <font-awesome-icon icon="plus-circle" />
           Ajouter un évènement
         </button>
+        <button class="btn btn-primary ml-2" @click="getFullPlanning">Rafraîchir</button>
       </div>
 
       <Event v-for="event in events" :key="event.id"
         :is-authenticated="isAuthenticated"
         :id="event.id"
         :name="event.name"
+        :category="event.category"
         :description="event.description"
         :event-date="new Date(event.event_date)"
         :selected-instrument="instrumentSelected && instrumentSelected.code"
@@ -120,7 +123,8 @@ export default {
       instruments,
       eventEditMode: false,
       instrumentSelected: null,
-      currentEventId: null
+      currentEventId: null,
+      eventToEdit: null
     };
   },
   methods: {
@@ -165,8 +169,10 @@ export default {
       );
     },
     showAddEventForm: function() {
-      this.eventEditMode = false;
       this.$refs.eventModal.show();
+      setTimeout(() => {
+        this.eventEditMode = false;
+      }, 150);
     },
     hideEventForm: function() {
       this.$refs.eventModal.hide();
@@ -188,7 +194,11 @@ export default {
         () => {
           // Basically means it got inserted.
           // That's what we're going to assume alright.
-          this.showMessage('Evènement ajouté', 'alert-success', true);
+          this.showMessage(
+            evt.id ? 'Evènement modifié' : 'Evènement ajouté', 
+            'alert-success', 
+            true
+          );
           this.getFullPlanning();
         },
         (status) => {
@@ -301,8 +311,13 @@ export default {
           );
         }
     },
-    editEvent: function(eventId) {
-      
+    editEvent: function(evt) {
+      this.$refs.eventModal.show();
+      setTimeout(() => {
+        this.eventEditMode = true;
+        this.eventToEdit = evt;
+      }
+      , 200);
     }
   },
   beforeRouteEnter: function(to, from, next) {

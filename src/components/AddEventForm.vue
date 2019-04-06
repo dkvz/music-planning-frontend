@@ -48,7 +48,8 @@ export default {
   name: 'AddEventForm',
   props: {
     planningId: String,
-    editMode: Boolean
+    editMode: Boolean,
+    event: Object
   },
   data: function() {
     return {
@@ -102,10 +103,23 @@ export default {
     this.setDate(new Date());
   },
   watch: {
-    editMode: function(newVal, oldVal) {
-      if (oldVal && !newVal) {
+    editMode: function(newVal) {
+      if (!newVal) {
         // Reset the form:
         this.resetForm();
+      }
+    },
+    event: function(newVal) {
+      if (newVal) {
+        // Set the values:
+        if (newVal.event_id) this.id = newVal.event_id;
+        else if (newVal.id) this.id = newVal.id;
+        this.name = newVal.name;
+        this.category = newVal.category;
+        this.description = newVal.description;
+        if (newVal.eventDate) this.setDate(newVal.eventDate);
+        else if (newVal.event_date) this.setDate(newVal.event_date);
+        else this.setDate(new Date());
       }
     }
   }
