@@ -7,6 +7,10 @@ import axios from 'axios';
 
 // TODO The object is full of stuff that can be refactored.
 // We need generic functions to post, for instance.
+// Also this is just horrible we should return promises not
+// use these weird success and error callbaks.
+
+// DONT LOOK AT THIS CODE
 
 export default {
   apiUrl: 'http://localhost:8081',
@@ -85,6 +89,17 @@ export default {
   deletePlanning: function(planningId, successCallback, errorCallback) {
     axios.delete(
       `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`, 
+      this.axiosOptions
+    ).then(() => {
+      successCallback && successCallback();
+    })
+    .catch(res => {
+      errorCallback && errorCallback(res.response.status);
+    });
+  },
+  deleteEvent: function(eventId, successCallback, errorCallback) {
+    axios.delete(
+      `${this.apiUrl}${this.apiSuffix}/events/${eventId}`, 
       this.axiosOptions
     ).then(() => {
       successCallback && successCallback();

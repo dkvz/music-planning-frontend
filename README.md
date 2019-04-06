@@ -82,6 +82,16 @@ I could've avoided this using VueX or an event bus.
 
 => The lesson I learned is to just always use VueX unless your app is extremely simple and only gets data. Preferably in an unauthenticated manner.
 
+## Keys in v-for loops
+I strived to use unique kind of identifiers but when you're browsing an array you're usually better off just using the array index as key.
+
+Example from the code:
+```html
+<div class="col col-sm-12 col-lg-2 col-md-3"
+  v-for="(instrumentGroup, index) in orderedPresences" 
+  :key="index">
+```
+
 # More notes
 * There's a shorthand for applying preventDefault to form submit events declaratively.
 
@@ -95,3 +105,4 @@ I could've avoided this using VueX or an event bus.
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
+- [ ] Add some kind of reload button to the planning view

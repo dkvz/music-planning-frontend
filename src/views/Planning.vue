@@ -74,7 +74,9 @@
         :event-date="new Date(event.event_date)"
         :selected-instrument="instrumentSelected && instrumentSelected.code"
         :presences="event.presences"
-        @add-presence="showPresenceModal"
+        @add-presence="showPresenceModal" 
+        @remove-event="removeEvent"
+        @edit-event="editEvent"
         className="event-row">
       </Event>
 
@@ -224,7 +226,8 @@ export default {
       // changes during the web request for some reason. 
       // Yeah I'm like that.
       const curEventId = this.currentEventId;
-      const curInstrument = this.instrumentSelected || instruments[0].code;
+      const curInstrument = 
+        (this.instrumentSelected && this.instrumentSelected.code) || instruments[0].code;
       this.$refs.presenceModal.hide();
       if (name) {
         this.loading = true;
@@ -277,6 +280,29 @@ export default {
       this.instrumentSelected = null;
       this.currentEventId = eventId;
       this.$refs.presenceModal.show();
+    },
+    removeEvent: function(eventId) {
+      if (confirm(`Supprimer cet évènement?\nToutes les présences associées seront également supprimées, vaut mieux être sûr de son coup. Supprimer?`)) {
+          this.loading = true;
+          // Reload all the data on success.
+          api.deleteEvent(
+            eventId,
+            () => {
+              this.showMessage('Evènement supprimé', 'alert-success', true);
+              this.getFullPlanning();
+            },
+            () => {
+              this.loading = false;
+              this.scrollToTop();
+              this.showMessage(
+                'Erreur serveur - Voir avec l\'administrateur', 'alert-warning'
+              );
+            }
+          );
+        }
+    },
+    editEvent: function(eventId) {
+      
     }
   },
   beforeRouteEnter: function(to, from, next) {
