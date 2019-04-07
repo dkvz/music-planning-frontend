@@ -47,7 +47,8 @@
               <div class="form-group">
                 <DkAutocomplete :suggestions="instruments"
                   placeholder="Votre instrument..."
-                  :selected="selectedInstrument">
+                  :selected="selectedInstrument"
+                  @item-selected="instrumentSelected">
                 </DkAutocomplete>
               </div>
             </div>
@@ -61,7 +62,7 @@
             <div class="col"
               v-for="(instrumentGroup, index) in orderedPresences" 
               :key="index">
-              <strong><u>{{ instrumentGroup.name }}</u></strong>
+              <strong>{{ instrumentGroup.name }}</strong>
               <ul class="presence-list">
                 <li v-for="presence in instrumentGroup.data" :key="presence.id">
                   <span>{{ presence.name }}</span>
@@ -119,7 +120,8 @@ export default {
       // Can't I just actually use this._uid?
       uid: null,
       present: false,
-      instruments
+      instruments,
+      internalSelectedInstrument: ''
     };
   },
   mounted: function() {
@@ -133,7 +135,7 @@ export default {
     removePresence: function(e) {
       this.$emit(
         'remove-presence', 
-        Number(e.target.getAttribute('data-pid')),
+        e.currentTarget.getAttribute('data-pid'),
         this.id
       );
     },
@@ -151,6 +153,16 @@ export default {
           eventDate: this.eventDate
         }
       );
+    },
+    instrumentSelected({code}) {
+      this.internalSelectedInstrument = code;
+    },
+    getValue: function() {
+      return {
+        event_id: this.id,
+        presence: this.present,
+        instrument_code: this.internalSelectedInstrument || instruments[0].code
+      };
     }
   },
   computed: {
@@ -199,21 +211,25 @@ export default {
           // -> We need to resolve the instrument code to
           // an instrument.
           // I made a terrible code-to-name lookup table.
-          let found = false;
-          for (let instr of res) {
-            if (instr.code === p.instrument_code) {
-              instr.data.push(p);
-              found = true;
-            }
-          }
-          if (!found) {
-            res.push(
-              {
-                code: p.instrument_code,
-                name: instrumentCodes[p.instrument_code],
-                data: [p]
+          // If the person is marked as absent we completely
+          // ignore them here.
+          if (p.presence) {
+            let found = false;
+            for (let instr of res) {
+              if (instr.code === p.instrument_code) {
+                instr.data.push(p);
+                found = true;
               }
-            );
+            }
+            if (!found) {
+              res.push(
+                {
+                  code: p.instrument_code,
+                  name: instrumentCodes[p.instrument_code],
+                  data: [p]
+                }
+              );
+            }
           }
         });
         // Now order everything by name:
@@ -237,11 +253,13 @@ export default {
 .presence-list li, .event-header {
   display: flex;
   justify-content: space-between;
+  border-top: 2px solid #999;
+  padding-top: 0.5rem;
 }
 .presence-list {
   padding: 0;
   margin: 0;
-  list-style: none;
+  list-style-type: none;
 }
 .no-padding {
   padding: 0;

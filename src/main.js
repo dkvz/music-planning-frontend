@@ -3,18 +3,19 @@ import App from './App.vue';
 import router from './router';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faTrash, 
   faSave, 
   faTimesCircle, 
   faPlusCircle,
-  faEdit
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  faEdit,
+  faFileExport
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import RotateLoader from 'vue-spinner/src/RotateLoader.vue';
 
-library.add(faTrash, faSave, faTimesCircle, faPlusCircle, faEdit);
+library.add(faTrash, faSave, faTimesCircle, faPlusCircle, faEdit, faFileExport);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('rotate-loader', RotateLoader);

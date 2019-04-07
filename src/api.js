@@ -86,6 +86,20 @@ export default {
         errorCallback && errorCallback(res.response.status);
       });
   },
+  postAllPlanning: function(name, presences, successCallback, errorCallback) {
+    axios.post(
+      this.apiUrl + this.apiSuffix + '/all-presence',
+      {
+        name,
+        presences
+      },
+      this.axiosOptions
+    ).then(() => {
+      successCallback && successCallback();
+    }).catch(res => {
+      errorCallback && errorCallback(res.response.status);
+    });
+  },
   deletePlanning: function(planningId, successCallback, errorCallback) {
     axios.delete(
       `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`, 

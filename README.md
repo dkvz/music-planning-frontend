@@ -105,5 +105,5 @@ Example from the code:
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
-- [ ] Put a better refresh button on the Planning view, for authenticated users or not
+- [ ] Put a better refresh button on the Planning view, for authenticated users or not - Use a simple icon, aligned to right, right above the list of Event components - We might want to only show that one to non-authenticated users, and keep the other one for authenticated users
 - [ ] Autocomplete suggestions blend in too much - make them stick out somehow

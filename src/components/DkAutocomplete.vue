@@ -126,6 +126,7 @@ export default {
         if (sugg && sugg.length > 0) {
           this.selectedCode = sugg[0].code;
           this.value = sugg[0].name;
+          this.$emit('item-selected', {name: this.value, code: this.selectedCode});
         }
       }   
     }

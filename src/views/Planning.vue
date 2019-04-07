@@ -69,6 +69,7 @@
       </div>
 
       <Event v-for="event in events" :key="event.id"
+        ref="evtComponents"
         :is-authenticated="isAuthenticated"
         :id="event.id"
         :name="event.name"
@@ -83,6 +84,14 @@
         @edit-event="editEvent"
         className="event-row">
       </Event>
+
+      <button class="btn btn-primary btn-lg btn-huge"
+        title="Soumettre vos choix (définitif) - ce bouton est immense"
+        v-if="!isAuthenticated && events && events.length > 0"
+        @click="submitAllPresences">
+        <font-awesome-icon icon="file-export" />
+        Enregistrer vos choix
+      </button>
 
     </div>
   </div>
@@ -300,19 +309,40 @@ export default {
       this.currentEventId = eventId;
       this.$refs.presenceModal.show();
     },
-    removePresence: function(eventId, presenceId) {
+    removePresence: function(presenceId, eventId) {
       if (confirm('Supprimer cette personne de la liste?')) {
         this.loading = true;
         api.deletePresence(
           presenceId,
           () => {
+            // Success. Or assumed success.
             // Let's remove it manually from source data:
-            
+            const curEvt = this._getEventById(eventId);
+            if (curEvt) {
+              for (let i = 0; i < curEvt.presences.length; i++) {
+                if (curEvt.presences[i].id == presenceId) {
+                  // Splice that item:
+                  curEvt.presences.splice(i, 1);
+                  break;
+                }
+              }
+            }
             this.loading = false;
           },
           (status) => {
             this.loading = false;
-
+            this.scrollToTop();
+            switch(status) {
+              case 403:
+                this.$router.push({name: 'not-allowed'});
+                break;
+              default:
+                this.showMessage(
+                `Erreur inconnue bizarre, 
+                l'API a répondu avec un statut ${status}.`,
+                'alert-danger'
+              );
+            }
           }
         );
       }
@@ -330,9 +360,15 @@ export default {
             () => {
               this.loading = false;
               this.scrollToTop();
-              this.showMessage(
-                'Erreur serveur - Voir avec l\'administrateur', 'alert-warning'
-              );
+              switch(status) {
+                case 403:
+                  this.$router.push({name: 'not-allowed'});
+                  break;
+                default:
+                  this.showMessage(
+                    'Erreur serveur - Voir avec l\'administrateur', 'alert-warning'
+                  );
+              }
             }
           );
         }
@@ -344,6 +380,55 @@ export default {
         this.eventToEdit = evt;
       }
       , 200);
+    },
+    submitAllPresences: function() {
+      // Check that the name is filled up.
+      // Instrument is not mandatory but will be replaced
+      // with the default "uknown" one.
+      // This function will use 1 million refs. Peak vue
+      // expert here.
+      const name = this.$refs.mainNameInput.getValue();
+      if (!name) {
+        this.scrollToTop();
+        this.showMessage(
+          'Vous devez entrer un nom dans le champ qui indique "Votre nom" où ça va pas être possible.',
+          'alert-warning'
+        );
+        return;
+      }
+      this.loading = true;
+      const res = {name};
+      // The button is hidden if there are no events. So
+      // that case should be covered up.
+      // My awesome ugly array of refs to Event components comes into 
+      // play now:
+      res.presences = this.$refs.evtComponents.map(e => e.getValue());
+      // I thought I needed to pass the res object but I actually need
+      // its properties. Oh well...
+      api.postAllPlanning(
+        res.name, 
+        res.presences,
+        () => {
+          // Redirect to a dedicated success page:
+          this.$router.push({name: 'success'});
+        },
+        (status) => {
+          this.loading = false;
+          this.scrollToTop();
+          switch(status) {
+            case 503:
+              this.showMessage(
+                'Service temporairement indisponible, veuillez réessayer plus tard.',
+                'alert-danger'
+              );
+              break;
+            default:
+              this.showMessage(
+                'Erreur serveur - Voir avec l\'administrateur', 'alert-warning'
+              );
+          }
+        }
+      );
     }
   },
   beforeRouteEnter: function(to, from, next) {
@@ -361,11 +446,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .event-row {
   margin-bottom: 2rem; 
 }
 .planning-title {
   margin-bottom: 1.6rem;
+}
+.btn-huge {
+  width: 100%;
+  padding: 2rem !important;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+@media (max-width: 600px) {
+  .btn-huge {
+    font-size: 1.2rem;
+  }
 }
 </style>
