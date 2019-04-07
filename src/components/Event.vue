@@ -80,6 +80,9 @@
           </div>
 
         </div>
+        <div class="card-footer">
+          Total présent.e.s: <strong>{{ totalPresences }}</strong>
+        </div>
       </div>
     </div>
 
@@ -217,6 +220,10 @@ export default {
         });
       }
       return res;
+    },
+    totalPresences: function() {
+      if (this.presences) return this.presences.length;
+      else return 0;
     }
   }
 }

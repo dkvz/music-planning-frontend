@@ -43,7 +43,7 @@
       </template>
     </Modal>
     <DkLoader :loading="loading"></DkLoader>
-    <h1 v-if="planningName">{{ planningName }}</h1>
+    <h1 v-if="planningName" class="planning-title">Planning: {{ planningName }}</h1>
     <div v-if="message.text" class="alert" :class="message.className">
       {{ message.text }}
     </div>
@@ -338,5 +338,8 @@ export default {
 <style>
 .event-row {
   margin-bottom: 2rem; 
+}
+.planning-title {
+  margin-bottom: 1.6rem;
 }
 </style>

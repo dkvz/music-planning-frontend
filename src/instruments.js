@@ -145,6 +145,10 @@ const instruments = [
   {
     name: 'Clavier / Piano',
     code: 'clav'
+  },
+  {
+    name: 'Chapeau Chinois',
+    code: 'chin'
   }
 ];
 

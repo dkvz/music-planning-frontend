@@ -91,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 ul.autocomplete-list {
   position: fixed;
   z-index: 999;
