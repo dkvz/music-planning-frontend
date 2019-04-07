@@ -100,7 +100,8 @@ export default {
     },
     setDate(date) {
       this.date = date;
-      this.$refs.dateInput.value = date.toISOString().substr(0, 10);
+      if (this.$refs.dateInput) 
+        this.$refs.dateInput.value = date.toISOString().substr(0, 10);
     },
     getDate() {
       return new Date(this.$refs.dateInput.value);

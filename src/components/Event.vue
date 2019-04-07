@@ -6,10 +6,10 @@
         <div class="card-header event-header">
           <h5>{{ name }}</h5>
           <div v-if="isAuthenticated">
-            <button class="btn btn-primary btn-sm mr-1" title="Modifier" @click="editEvent">
+            <button class="btn-semi-small text-primary" title="Modifier" @click="editEvent">
               <font-awesome-icon icon="edit" />
             </button>
-            <button class="btn btn-danger btn-sm" title="Supprimer" @click="removeEvent">
+            <button class="btn-semi-small text-danger" title="Supprimer" @click="removeEvent">
               <font-awesome-icon icon="trash" />
             </button>
           </div>
@@ -66,11 +66,12 @@
                 <li v-for="presence in instrumentGroup.data" :key="presence.id">
                   <span>{{ presence.name }}</span>
                   <button 
-                    class="btn-super-small" 
+                    v-if="isAuthenticated"
+                    class="btn-semi-small text-danger" 
                     :data-pid="presence.id" 
                     @click="removePresence"
                     title="Effacer">
-                    &times;
+                    <font-awesome-icon icon="trash" size="xs" />
                   </button>
                 </li>
               </ul>
@@ -242,9 +243,14 @@ export default {
 .btn-super-small {
   padding: 0;
   margin: 0;
-  color: #ff1010;
   background-color: #ebedeb;
   line-height: 10px;
   border: 1px solid silver;
+}
+.btn-semi-small {
+  padding: 2px 0px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
 }
 </style>
