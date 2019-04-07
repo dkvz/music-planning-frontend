@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="autocomplete-box">
     <label v-if="label" :for="inputId">{{ label }}</label>
     <input 
       type="text" 
@@ -92,8 +92,13 @@ export default {
 </script>
 
 <style scoped>
+.autocomplete-box {
+  position: relative;
+}
+
 ul.autocomplete-list {
-  position: fixed;
+  display: block;
+  position: absolute;
   z-index: 999;
 }
 
