@@ -98,11 +98,12 @@ Example from the code:
 # TODO
 - [ ] Add the favicon
 - [ ] Try [transitions](https://vuejs.org/v2/guide/transitions.html) with some of the v-ifs
-- [ ] The "Home" view can be removed
-- [ ] Remove the HelloWorld component, it's imported in several places
+- [x] The "Home" view can be removed
+- [x] Remove the HelloWorld component, it's imported in several places
 - [ ] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [ ] Add a refresh button for the PlanningList component
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
-- [ ] Add some kind of reload button to the planning view
+- [ ] Put a better refresh button on the Planning view, for authenticated users or not
+- [ ] Autocomplete suggestions blend in too much - make them stick out somehow

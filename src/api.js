@@ -108,6 +108,17 @@ export default {
       errorCallback && errorCallback(res.response.status);
     });
   },
+  deletePresence: function(presenceId, successCallback, errorCallback) {
+    axios.delete(
+      `${this.apiUrl}${this.apiSuffix}/presence/${presenceId}`, 
+      this.axiosOptions
+    ).then(() => {
+      successCallback && successCallback();
+    })
+    .catch(res => {
+      errorCallback && errorCallback(res.response.status);
+    });
+  },
   getFullPlanning: function(planningId, successCallback, errorCallback) {
     axios.get(
       `${this.apiUrl}${this.apiSuffix}/plannings/${planningId}`,

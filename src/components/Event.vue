@@ -131,7 +131,11 @@ export default {
       this.$emit('add-presence', this.id);
     },
     removePresence: function(e) {
-      this.$emit('remove-presence', Number(e.target.getAttribute('data-pid')));
+      this.$emit(
+        'remove-presence', 
+        Number(e.target.getAttribute('data-pid')),
+        this.id
+      );
     },
     removeEvent: function() {
       this.$emit('remove-event', this.id);

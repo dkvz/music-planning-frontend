@@ -78,6 +78,7 @@
         :selected-instrument="instrumentSelected && instrumentSelected.code"
         :presences="event.presences"
         @add-presence="showPresenceModal" 
+        @remove-presence="removePresence"
         @remove-event="removeEvent"
         @edit-event="editEvent"
         className="event-row">
@@ -225,6 +226,13 @@ export default {
     setSelectedInstrument: function(instr) {
       this.instrumentSelected = instr;
     },
+    _getEventById: function(eventId) {
+      const curEvt = this.events.filter(
+        evt => evt.id == eventId
+      )[0];
+      if (curEvt) return curEvt;
+      else return null;
+    },
     addPresence: function() {
       // Get the name from refs.
       // Selected instrument is in this.instrumentSelected.
@@ -248,9 +256,10 @@ export default {
           (data) => {
             // We should add the new presence to the current
             // full array.
-            const curEvt = this.events.filter(
+            /* const curEvt = this.events.filter(
               evt => evt.id == curEventId
-            )[0];
+            )[0]; */
+            const curEvt = this._getEventById(curEventId);
             if (curEvt) {
               curEvt.presences.push({
                 id: data.id,
@@ -290,6 +299,23 @@ export default {
       this.instrumentSelected = null;
       this.currentEventId = eventId;
       this.$refs.presenceModal.show();
+    },
+    removePresence: function(eventId, presenceId) {
+      if (confirm('Supprimer cette personne de la liste?')) {
+        this.loading = true;
+        api.deletePresence(
+          presenceId,
+          () => {
+            // Let's remove it manually from source data:
+            
+            this.loading = false;
+          },
+          (status) => {
+            this.loading = false;
+
+          }
+        );
+      }
     },
     removeEvent: function(eventId) {
       if (confirm(`Supprimer cet évènement?\nToutes les présences associées seront également supprimées, vaut mieux être sûr de son coup. Supprimer?`)) {
