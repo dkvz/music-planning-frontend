@@ -66,11 +66,15 @@ export default {
   },
   methods: {
     submitForm: function() {
+      // I could probably v-model the date as a string
+      // as the date input outputs YYYY-MM-DD, but I'm 
+      // going to use refs for now.
       const evt = {
         name: this.name,
         category: this.category,
         description: this.description,
-        eventDate: this.date
+        //eventDate: this.date
+        eventDate: this.getDate()
       };
       if (this.id > 0) {
         evt.id = this.id;
@@ -96,7 +100,10 @@ export default {
     },
     setDate(date) {
       this.date = date;
-      this.$refs.dateInput.value = date.toLocaleDateString();
+      this.$refs.dateInput.value = date.toISOString().substr(0, 10);
+    },
+    getDate() {
+      return new Date(this.$refs.dateInput.value);
     }
   },
   mounted: function() {
