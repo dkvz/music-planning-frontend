@@ -10,15 +10,17 @@
       :placeholder="placeholder"
       @blur="_blurred"
       @keyup="_keyup"
+      @keydown="_keydown"
       v-model="value">
     <ul class="list-group autocomplete-list"
       v-bind:class="{'d-none': !listVisible}">
       <li 
-        v-for="item in filtered" 
+        v-for="(item, index) in filtered" 
         :key="item.code" 
         :data-code="item.code" 
         :data-name="item.name" 
         class="list-group-item" 
+        :class="{'list-item-active': index === highlighted}"
         @click="_itemClick">
           {{ item.name }}
       </li>
@@ -35,7 +37,8 @@ export default {
       listVisible: false,
       value: '',
       filtered: [],
-      selectedCode: null
+      selectedCode: null,
+      highlighted: -1
     };
   },
   props: {
@@ -50,9 +53,16 @@ export default {
     _blurred: function() {
       setTimeout(() => this.listVisible = false, 150);
     },
-    _keyup: function() {
+    _keyup: function(e) {
+      // Ignore what we'll treat with keydown:
+      if (e.code.indexOf('Arrow') >= 0 ||
+        e.code === 'Esc' ||
+        e.code === 'Enter') {
+          return;
+        }
       // Cancel selected code:
       this.selectedCode = null;
+      this.highlighted = -1;
       if (this.value) {
         const lowercased = this.value.toLowerCase();
         const filtered = this.suggestions.filter(
@@ -65,6 +75,38 @@ export default {
         } 
       }
       this.listVisible = false;
+    },
+    _keydown: function(e) {
+      // We be looking for ArrowDown, ArrowUp, Enter and Escape.
+      // We shouldn't do anything unless the suggestions
+      // are currently showing.
+      if (this.listVisible) {
+        switch (e.code) {
+        case 'ArrowDown':
+          if (this.highlighted < (this.filtered.length - 1)) {
+            this.highlighted++;
+          }
+          break;
+        case 'ArrowUp':
+          if (this.highlighted > 0) {
+            this.highlighted--;
+          }
+          break;
+        case 'Enter':
+          if (this.filtered[this.highlighted]) {
+            this.selectedCode = this.filtered[this.highlighted].code;
+            this.value = this.filtered[this.highlighted].name;
+            this.$emit('item-selected', this.filtered[this.highlighted]);
+          }
+          // I thought I was smart just falling to the next case which
+          // also calls _blurred() but apparently the linter doesn't 
+          // allow switch cases with no break at the end... Oh well.
+          this._blurred();
+          break;
+        case 'Escape':
+          this._blurred();
+        }
+      }
     },
     _itemClick: function(e) {
       this.selectedCode = e.target.getAttribute('data-code');
@@ -106,7 +148,7 @@ ul.autocomplete-list li {
   cursor: pointer;
 }
 
-ul.autocomplete-list li:hover {
+ul.autocomplete-list li:hover, .list-item-active {
   background-color: #edebeb;
 }
 </style>
