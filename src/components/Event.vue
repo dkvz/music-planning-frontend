@@ -32,7 +32,7 @@
 
            <div class="row">
 
-            <div class="col col-sm-12 col-xs-12 col-lg-5 col-md-6 bg-light"
+            <div class="col-sm-12 col-xs-12 col-lg-5 col-md-6 bg-light"
               v-if="!isAuthenticated">
               <div class="form-check presence-checkbox">
                 <input type="checkbox"  
@@ -51,17 +51,17 @@
                 </DkAutocomplete>
               </div>
             </div>
-            <div v-else class="col col-sm-12 col-xs-12 col-lg-3 col-md-4">
+            <div v-else class="col-sm-12 col-xs-12 col-lg-3 col-md-4">
               <button class="btn btn-primary" @click="addPresence">
                 <font-awesome-icon icon="plus-circle" />
                 Ajouter
               </button>
             </div>
 
-            <div class="col col-sm-12 col-lg-2 col-md-3"
+            <div class="col"
               v-for="(instrumentGroup, index) in orderedPresences" 
               :key="index">
-              <h5>{{ instrumentGroup.name }}</h5>
+              <strong><u>{{ instrumentGroup.name }}</u></strong>
               <ul class="presence-list">
                 <li v-for="presence in instrumentGroup.data" :key="presence.id">
                   <span>{{ presence.name }}</span>
