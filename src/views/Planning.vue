@@ -50,7 +50,7 @@
       </div>
     </transition>
     <div v-if="planningName">
-      <div v-if="!isAuthenticated" class="card event-row">
+      <div v-if="!isAuthenticated" class="card mb-4">
         <div class="card-header">Vous êtes qui?</div>
         <div class="card-body row">
           <NameInput ref="mainNameInput" class="col-lg-6"></NameInput>
@@ -457,10 +457,10 @@ export default {
 
 <style scoped>
 .event-row {
-  margin-bottom: 2rem; 
+  margin-bottom: 4rem; 
 }
 .planning-title {
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
 }
 .btn-huge {
   width: 100%;

@@ -4,7 +4,7 @@
     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
       <dir :class="'card no-padding ' + categoryClass">
         <div class="card-header event-header">
-          <h5>{{ name }}</h5>
+          <h4>{{ name }}</h4>
           <div v-if="isAuthenticated">
             <button class="btn-semi-small text-primary" title="Modifier" @click="editEvent">
               <font-awesome-icon icon="edit" />
@@ -21,18 +21,18 @@
       </dir>
     </div>
 
-    <div class="col col-lg-1 col-md-1 d-none d-sm-none d-md-block"></div>
+    <div class="col col-lg-1 d-none d-sm-none d-md-none d-lg-block"></div>
 
-    <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
       <div class="card">
         <div class="card-header">
-          Présences
+          <h5>Présences</h5>
         </div>
         <div class="card-body">
 
            <div class="row">
 
-            <div class="col-sm-12 col-xs-12 col-lg-5 col-md-6 bg-light"
+            <div class="col-12 bg-secondary mb-2"
               v-if="!isAuthenticated">
               <div class="form-check presence-checkbox">
                 <input type="checkbox"  
@@ -40,8 +40,8 @@
                   class="form-check-input"
                   v-model="present">
                 <label :for="'chkboxPres' + this.uid" 
-                  class="form-check-label">
-                  Présent!
+                  class="form-check-label text-light">
+                  <strong>Présent!</strong>
                 </label>
               </div>
               <div class="form-group">
@@ -52,14 +52,14 @@
                 </DkAutocomplete>
               </div>
             </div>
-            <div v-else class="col-sm-12 col-xs-12 col-lg-3 col-md-4">
+            <div v-else class="col-sm-12 col-xs-12 col-lg-4 col-md-6 pb-2">
               <button class="btn btn-primary" @click="addPresence">
                 <font-awesome-icon icon="plus-circle" />
                 Ajouter
               </button>
             </div>
 
-            <div class="col"
+            <div class="col col-sm-12 col-xs-12 col-md-6 col-lg-4"
               v-for="(instrumentGroup, index) in orderedPresences" 
               :key="index">
               <strong>{{ instrumentGroup.name }}</strong>
