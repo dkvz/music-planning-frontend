@@ -82,7 +82,7 @@
 
         </div>
         <div class="card-footer">
-          Total présent.e.s: <strong>{{ totalPresences }}</strong>
+          Total présent.e.s: <span class="badge badge-pill badge-info">{{ totalPresences }}</span>
         </div>
       </div>
     </div>
@@ -242,7 +242,7 @@ export default {
       return res;
     },
     totalPresences: function() {
-      if (this.presences) return this.presences.length;
+      if (this.presences) return this.presences.filter(p => p.presence).length;
       else return 0;
     }
   }

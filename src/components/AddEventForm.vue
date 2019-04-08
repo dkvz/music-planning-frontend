@@ -104,7 +104,9 @@ export default {
         this.$refs.dateInput.value = date.toISOString().substr(0, 10);
     },
     getDate() {
-      return new Date(this.$refs.dateInput.value);
+      return new Date(
+        this.$refs.dateInput ? this.$refs.dateInput.value : undefined
+      );
     }
   },
   mounted: function() {

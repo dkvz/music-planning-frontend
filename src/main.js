@@ -10,12 +10,15 @@ import {
   faTimesCircle, 
   faPlusCircle,
   faEdit,
-  faFileExport
+  faFileExport,
+  faSync
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import RotateLoader from 'vue-spinner/src/RotateLoader.vue';
 
-library.add(faTrash, faSave, faTimesCircle, faPlusCircle, faEdit, faFileExport);
+library.add(
+  faTrash, faSave, faTimesCircle, faPlusCircle, faEdit, faFileExport, faSync
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('rotate-loader', RotateLoader);

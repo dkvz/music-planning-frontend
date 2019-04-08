@@ -44,9 +44,11 @@
     </Modal>
     <DkLoader :loading="loading"></DkLoader>
     <h1 v-if="planningName" class="planning-title">Planning: {{ planningName }}</h1>
-    <div v-if="message.text" class="alert" :class="message.className">
-      {{ message.text }}
-    </div>
+    <transition name="fade">
+      <div v-if="message.text" class="alert" :class="message.className">
+        {{ message.text }}
+      </div>
+    </transition>
     <div v-if="planningName">
       <div v-if="!isAuthenticated" class="card event-row">
         <div class="card-header">Vous êtes qui?</div>
@@ -61,11 +63,18 @@
         </div>
       </div>
       <div v-if="isAuthenticated" class="bg-light p-3 my-3">
-        <button class="btn btn-primary" @click="showAddEventForm">
+        <button class="btn btn-primary mr-2" @click="showAddEventForm">
           <font-awesome-icon icon="plus-circle" />
           Ajouter un évènement
         </button>
-        <button class="btn btn-primary ml-2" @click="getFullPlanning">Rafraîchir</button>
+        <button class="btn btn-primary" @click="getFullPlanning">Rafraîchir</button>
+      </div>
+      <div v-else class="text-right mb-4">
+        <button class="btn btn-primary" 
+          @click="getFullPlanning"
+          title="Rafraîchir">
+          <font-awesome-icon icon="sync" />
+        </button>
       </div>
 
       <Event v-for="event in events" :key="event.id"
@@ -89,8 +98,8 @@
         title="Soumettre vos choix (définitif) - ce bouton est immense"
         v-if="!isAuthenticated && events && events.length > 0"
         @click="submitAllPresences">
-        <font-awesome-icon icon="file-export" />
-        Enregistrer vos choix
+          <font-awesome-icon icon="file-export" />
+          Enregistrer vos choix
       </button>
 
     </div>
@@ -464,5 +473,11 @@ export default {
   .btn-huge {
     font-size: 1.2rem;
   }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

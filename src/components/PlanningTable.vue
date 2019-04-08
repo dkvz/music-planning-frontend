@@ -2,7 +2,9 @@
   <div>
     <div class="text-right button-row mb-1">
       <button class="btn btn-primary ml-2" @click="displayForm">Ajouter</button>
-      <button class="btn btn-primary ml-2" @click="refreshClicked">Rafraîchir</button>
+      <button class="btn btn-primary ml-2" @click="refreshClicked" title="Rafraîchir">
+        <font-awesome-icon icon="sync" />
+      </button>
     </div>
     <form @submit="postPlanning">
     <table class="table table-striped">

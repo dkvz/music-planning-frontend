@@ -61,7 +61,10 @@ export default {
           return;
         }
       // Cancel selected code:
-      this.selectedCode = null;
+      if (this.selectedCode) {
+        this.selectedCode = null;
+        this.$emit('item-selected', {code: null, name: null});
+      }
       this.highlighted = -1;
       if (this.value) {
         const lowercased = this.value.toLowerCase();
@@ -143,6 +146,7 @@ ul.autocomplete-list {
   display: block;
   position: absolute;
   z-index: 999;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.6);
 }
 
 ul.autocomplete-list li {

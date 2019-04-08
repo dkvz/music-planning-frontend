@@ -96,14 +96,16 @@ Example from the code:
 * There's a shorthand for applying preventDefault to form submit events declaratively.
 
 # TODO
-- [ ] Add the favicon
-- [ ] Try [transitions](https://vuejs.org/v2/guide/transitions.html) with some of the v-ifs
+- [x] Add the favicon
+- [x] Try [transitions](https://vuejs.org/v2/guide/transitions.html) with some of the v-ifs
 - [x] The "Home" view can be removed
 - [x] Remove the HelloWorld component, it's imported in several places
-- [ ] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
-- [ ] Add a refresh button for the PlanningList component
+- [x] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
+- [x] Add a refresh button for the PlanningList component
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
-- [ ] Put a better refresh button on the Planning view, for authenticated users or not - Use a simple icon, aligned to right, right above the list of Event components - We might want to only show that one to non-authenticated users, and keep the other one for authenticated users
+- [x] Put a better refresh button on the Planning view, for authenticated users or not - Use a simple icon, aligned to right, right above the list of Event components - We might want to only show that one to non-authenticated users, and keep the other one for authenticated users
 - [ ] Autocomplete suggestions blend in too much - make them stick out somehow
+- [x] Removing an instrument from an embedded field from an event while the top instrument is set doesn't save the "unknown" instrument, it forces the top one
+- [ ] We could show the absent people or a way to show the absent people - Let's see if that's a requirement later on
