@@ -19,6 +19,9 @@ export default {
   username: '',
   cookieName: 'token',
   axiosOptions: { withCredentials: true },
+  _checkSetErrorStatus: function(res) {
+    if (!res.response) res.response = {status: 500};
+  },
   postLogin: function (username, password, isToken, successCallback, errorCallback) {
     const body = {
       username
@@ -39,6 +42,7 @@ export default {
         }
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -48,6 +52,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -57,6 +62,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -66,6 +72,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -83,6 +90,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -97,6 +105,7 @@ export default {
     ).then(() => {
       successCallback && successCallback();
     }).catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -108,6 +117,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -119,6 +129,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -130,6 +141,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -140,7 +152,10 @@ export default {
     ).then((res) => {
       successCallback && successCallback(res.data);
     })
-    .catch(res => errorCallback && errorCallback(res.response.status));
+    .catch(res => {
+      this._checkSetErrorStatus(res);
+      errorCallback && errorCallback(res.response.status);
+    });
   },
   getTokenFromCookie: function (document) {
     return this._getCookie(this.cookieName, document);
