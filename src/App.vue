@@ -11,12 +11,18 @@
         v-on:logged-out="hideNavbar" 
         v-bind:is-authenticated="isAuthenticated" />
     </main>
+    <footer class="mt-auto bg-light py-3">
+      <div class="container text-right">
+        <a href="https://github.com/dkvz/music-planning-frontend" target="_blank" rel="noopener noreferrer">
+          <img src="@/assets/github.png" alt="Github Icon">
+        </a>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
-import api from '@/api';
 
 export default {
   name: 'App',
@@ -40,5 +46,17 @@ export default {
 </script>
 
 <style>
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
+#app > main {
+  flex: 1;
+}
+
+#app > footer {
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
+}
 </style>

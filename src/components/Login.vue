@@ -3,9 +3,11 @@
     <div class="row justify-content-center">
       <form class="col-lg-6 border py-3" @submit="sendLogin">
         <h1>S'enregistrer</h1>
-        <div v-if="warningMessage" class="alert alert-warning" role="alert">
-          {{ warningMessage }}
-        </div>
+        <transition name="fade">
+          <div v-if="warningMessage" class="alert alert-warning" role="alert">
+            {{ warningMessage }}
+          </div>
+        </transition>
         <div class="form-group">
           <label for="nameInput">Nom d'utilisateur</label>
           <input v-model="username" type="text" class="form-control" id="nameInput" placeholder="Nom d'utilisateur" required>
@@ -80,5 +82,10 @@ export default {
 </script>
 
 <style>
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .6s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

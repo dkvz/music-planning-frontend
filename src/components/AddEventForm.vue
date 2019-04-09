@@ -21,7 +21,8 @@
         class="form-control" 
         id="eventNameInput" 
         placeholder="Entrer le nom de l'évènement"
-        v-model="name">
+        v-model="name"
+        required>
     </div>
     <div class="form-group">
       <label for="descriptionTextArea">Description</label>

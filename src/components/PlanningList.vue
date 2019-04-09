@@ -1,13 +1,16 @@
 <template>
   <div class="container">
     <h1>Plannings</h1>
-    <div v-if="message" class="alert" v-bind:class="{'alert-warning': errorMessage, 'alert-success': !errorMessage}" role="alert">
-      {{ message }}
-    </div>
+    <transition name="fade">
+      <div v-if="message" class="alert" v-bind:class="{'alert-warning': errorMessage, 'alert-success': !errorMessage}" role="alert">
+        {{ message }}
+      </div>
+    </transition>
     <PlanningTable 
       :plannings="plannings" 
-      @refresh="loadData"
       ref="planningTable"
+      v-on:refresh="loadData"
+      v-on:copy-planning="copyPlanning"
       v-on:new-planning="createPlanning"
       v-on:delete-planning="deletePlanning">
     </PlanningTable>
@@ -30,6 +33,7 @@
 import PlanningTable from '@/components/PlanningTable.vue';
 import Modal from '@/components/Modal.vue';
 import api from '@/api';
+import config from '@/config';
 
 export default {
   name: 'PlanningList',
@@ -70,6 +74,26 @@ export default {
           }
         }
       );
+    },
+    copyPlanning: function(planningId) {
+      /**
+       * Somehow I'd rather add the dummy input field 
+       * to the body element rather than my component 
+       * here. Clipboard support is horrible anyway.
+       */
+      const toCopy = `${config.prodUrl}/planning/${planningId}`;
+      const input = document.createElement('input');
+      input.value = toCopy;
+      input.style.position = 'absolute';
+      input.style.left = 0;
+      input.style.top = 0;
+      input.style.zIndex = -999;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      this.errorMessage = false;
+      this.message = `URL du planning ${toCopy} copiée dans le presse-papier`;
     },
     createPlanning: function(pName) {
       // To make things easy we just refresh at the end.
@@ -127,5 +151,10 @@ export default {
 </script>
 
 <style>
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .6s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

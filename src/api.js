@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from './config';
 
 // At this time the backend doesn't even return the 
 // username.
@@ -13,7 +14,7 @@ import axios from 'axios';
 // DONT LOOK AT THIS CODE
 
 export default {
-  apiUrl: 'http://localhost:8081',
+  apiUrl: process.env.NODE_ENV === 'development' ? config.apiUrlDev : config.apiUrlProd,
   apiSuffix: '',
   authenticated: false,
   username: '',
