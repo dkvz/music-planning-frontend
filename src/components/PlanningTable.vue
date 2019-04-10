@@ -35,6 +35,7 @@
           v-for="planning in plannings" 
           :key="planning.uuid"
           v-on:delete-planning="deletePlanning"
+          v-on:copy-planning="copyPlanning"
           :name="planning.name"
           :planning-id="planning.uuid"
           :creation-date="planning.jsDate">
@@ -47,7 +48,6 @@
 
 <script>
 import PlanningTableRow from '@/components/PlanningTableRow.vue';
-import { setTimeout } from 'timers';
 
 export default {
   name: 'PlanningTable',
@@ -67,6 +67,9 @@ export default {
   methods: {
     deletePlanning: function(planningId) {
       this.$emit('delete-planning', planningId);
+    },
+    copyPlanning: function(planningId) {
+      this.$emit('copy-planning', planningId);
     },
     postPlanning: function(e) {
       e.preventDefault();

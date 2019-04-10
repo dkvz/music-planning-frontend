@@ -8,6 +8,30 @@ I'm not always sure what I'm doing, but I'm doing it.
 npm install
 ```
 
+Edit `config.js` to make sure that the API URLs used for development and production are working for your environment. You should always test this app alongside the backend in development mode which is expected to be on http://localhost:8081.
+
+Backend repo: https://github.com/dkvz/music-planning-backend
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
 ## Dependencies and stuff
 To actually create the project I used the Vue CLI and `vue create app-name`, then I added the router using `vue add router`.
 
@@ -40,26 +64,6 @@ So I'm using a modified modal component from here: https://vuejs.org/v2/examples
 
 ### Spinners
 I'm using the spinners from here: https://github.com/greyby/vue-spinner
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -103,9 +107,13 @@ Example from the code:
 - [x] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [x] Add a refresh button for the PlanningList component
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
-- [ ] Write a recap of interesting Vue concepts and lessons learned
+- [ ] Write a recap of interesting Vue concepts and lessons learned -  I don't know if I'm doing something wrong but there's a LOT of divs in my HTML
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
 - [x] Put a better refresh button on the Planning view, for authenticated users or not - Use a simple icon, aligned to right, right above the list of Event components - We might want to only show that one to non-authenticated users, and keep the other one for authenticated users
-- [ ] Autocomplete suggestions blend in too much - make them stick out somehow
+- [x] Autocomplete suggestions blend in too much - make them stick out somehow
 - [x] Removing an instrument from an embedded field from an event while the top instrument is set doesn't save the "unknown" instrument, it forces the top one
 - [ ] We could show the absent people or a way to show the absent people - Let's see if that's a requirement later on
+- [ ] After deployment, check that gzip compression is active
+- [x] Prevent adding an event with no name
+- [x] Add a footer with the github repo link aligned to right
+- [x] Adding someone manually in an event when logged in works but you have to refresh to see the new element

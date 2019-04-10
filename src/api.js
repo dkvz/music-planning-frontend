@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from './config';
 
 // At this time the backend doesn't even return the 
 // username.
@@ -13,12 +14,15 @@ import axios from 'axios';
 // DONT LOOK AT THIS CODE
 
 export default {
-  apiUrl: 'http://localhost:8081',
+  apiUrl: process.env.NODE_ENV === 'development' ? config.apiUrlDev : config.apiUrlProd,
   apiSuffix: '',
   authenticated: false,
   username: '',
   cookieName: 'token',
   axiosOptions: { withCredentials: true },
+  _checkSetErrorStatus: function(res) {
+    if (!res.response) res.response = {status: 500};
+  },
   postLogin: function (username, password, isToken, successCallback, errorCallback) {
     const body = {
       username
@@ -39,6 +43,7 @@ export default {
         }
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -48,6 +53,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -57,6 +63,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -66,6 +73,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -83,6 +91,7 @@ export default {
         successCallback && successCallback(res.data);
       })
       .catch(res => {
+        this._checkSetErrorStatus(res);
         errorCallback && errorCallback(res.response.status);
       });
   },
@@ -97,6 +106,7 @@ export default {
     ).then(() => {
       successCallback && successCallback();
     }).catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -108,6 +118,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -119,6 +130,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -130,6 +142,7 @@ export default {
       successCallback && successCallback();
     })
     .catch(res => {
+      this._checkSetErrorStatus(res);
       errorCallback && errorCallback(res.response.status);
     });
   },
@@ -140,7 +153,10 @@ export default {
     ).then((res) => {
       successCallback && successCallback(res.data);
     })
-    .catch(res => errorCallback && errorCallback(res.response.status));
+    .catch(res => {
+      this._checkSetErrorStatus(res);
+      errorCallback && errorCallback(res.response.status);
+    });
   },
   getTokenFromCookie: function (document) {
     return this._getCookie(this.cookieName, document);

@@ -67,7 +67,9 @@
           <font-awesome-icon icon="plus-circle" />
           Ajouter un évènement
         </button>
-        <button class="btn btn-primary" @click="getFullPlanning">Rafraîchir</button>
+        <button class="btn btn-primary" @click="getFullPlanning" title="Rafraîchir">
+          <font-awesome-icon icon="sync" />
+        </button>
       </div>
       <div v-else class="text-right mb-4">
         <button class="btn btn-primary" 
@@ -204,8 +206,8 @@ export default {
       // backend will figure it out by the presence
       // of the "id" property.
       this.hideEventForm();
-      this.loading = true;
       this.scrollToTop();
+      this.loading = true;
       evt.event_date = evt.eventDate.getTime();
       evt.planning_id = this.planningId;
       api.postEvent(
@@ -282,7 +284,8 @@ export default {
               curEvt.presences.push({
                 id: data.id,
                 name,
-                instrument_code: curInstrument
+                instrument_code: curInstrument,
+                presence: true
               });
             }  
             this.loading = false;
