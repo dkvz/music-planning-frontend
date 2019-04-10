@@ -158,8 +158,23 @@ export default {
       errorCallback && errorCallback(res.response.status);
     });
   },
+  checkLogin: function(successCallback, errorCallback) {
+    axios.get(
+      this.apiUrl + this.apiSuffix + '/check-login',
+      this.axiosOptions
+    ).then(() => {
+      successCallback && successCallback();
+    })
+    .catch(() => {
+      errorCallback && errorCallback();
+    });
+  },
   getTokenFromCookie: function (document) {
     return this._getCookie(this.cookieName, document);
+  },
+  // Wait this is no english
+  isLoggedInBefore: function(document) {
+    return this._getCookie('was-logged-in', document);
   },
   // Don't remember where I stole this from, copied
   // from another one of my projects.
@@ -180,6 +195,7 @@ export default {
   logout: function(document) {
     // Destroy the cookie: 
     document.cookie = `${this.cookieName}=;path=/;Expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+    document.cookie = 'was-logged-in=;path=/;Expires=Thu, 01 Jan 1970 00:00:01 GMT';
     this.authenticated = false;
     this.username = '';
   }
