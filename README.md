@@ -101,6 +101,19 @@ We need to scroll the focused autocomplete element to top on mobile only.
 
 I think I can use `document.documentElement.clientWidth` for a specific minimum size (gives out a Number) of 600.
 
+## Dynamic import through Router
+There was an example of this in router.js originally that looked like so:
+```js
+{
+  path: '/about',
+  name: 'about',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+},
+```
+
 # More notes
 * There's a shorthand for applying preventDefault to form submit events declaratively.
 
