@@ -11,7 +11,8 @@
       @blur="_blurred"
       @keyup="_keyup"
       @keydown="_keydown"
-      v-model="value">
+      v-model="value"
+      ref="input">
     <ul class="list-group autocomplete-list"
       v-bind:class="{'d-none': !listVisible}">
       <li 
@@ -38,7 +39,8 @@ export default {
       value: '',
       filtered: [],
       selectedCode: null,
-      highlighted: -1
+      highlighted: -1,
+      scrolledTo: false
     };
   },
   props: {
@@ -47,11 +49,16 @@ export default {
     suggestions: Array,
     placeholder: String,
     label: String,
-    selected: String
+    selected: String,
+    autoScrollTo: Boolean,
+    scroller: Object
   },
   methods: {
     _blurred: function() {
-      setTimeout(() => this.listVisible = false, 150);
+      setTimeout(() => {
+        this.listVisible = false;
+        this.scrolledTo = false;
+      }, 150);
     },
     _keyup: function(e) {
       // Ignore what we'll treat with keydown:
@@ -83,31 +90,47 @@ export default {
       // We be looking for ArrowDown, ArrowUp, Enter and Escape.
       // We shouldn't do anything unless the suggestions
       // are currently showing.
+      if (this.autoScrollTo && 
+        document.documentElement.clientWidth <= 600 &&
+        !this.scrolledTo &&
+        this.$refs.input.scrollIntoView) {
+        // Scroll to the element. I'm using the ID.
+        // The check for clientWidth is so that this only happens on mobile.
+        //location.hash = this.inputId;
+        //this.$refs.input.focus();
+        // We can't use location.hash, it blurs the input.
+        this.scrolledTo = true;
+        /* const scroller = this.scroller ? this.scroller : document.documentElement;
+        scroller.scrollTop = this.$refs.input.offsetTop + 200; */
+        // Let's use an experimental feature 'scrollIntoView'.
+        // I check for its existence above.
+        this.$refs.input.scrollIntoView();
+      }
       if (this.listVisible) {
         switch (e.code) {
-        case 'ArrowDown':
-          if (this.highlighted < (this.filtered.length - 1)) {
-            this.highlighted++;
-          }
-          break;
-        case 'ArrowUp':
-          if (this.highlighted > 0) {
-            this.highlighted--;
-          }
-          break;
-        case 'Enter':
-          if (this.filtered[this.highlighted]) {
-            this.selectedCode = this.filtered[this.highlighted].code;
-            this.value = this.filtered[this.highlighted].name;
-            this.$emit('item-selected', this.filtered[this.highlighted]);
-          }
-          // I thought I was smart just falling to the next case which
-          // also calls _blurred() but apparently the linter doesn't 
-          // allow switch cases with no break at the end... Oh well.
-          this._blurred();
-          break;
-        case 'Escape':
-          this._blurred();
+          case 'ArrowDown':
+            if (this.highlighted < (this.filtered.length - 1)) {
+              this.highlighted++;
+            }
+            break;
+          case 'ArrowUp':
+            if (this.highlighted > 0) {
+              this.highlighted--;
+            }
+            break;
+          case 'Enter':
+            if (this.filtered[this.highlighted]) {
+              this.selectedCode = this.filtered[this.highlighted].code;
+              this.value = this.filtered[this.highlighted].name;
+              this.$emit('item-selected', this.filtered[this.highlighted]);
+            }
+            // I thought I was smart just falling to the next case which
+            // also calls _blurred() but apparently the linter doesn't 
+            // allow switch cases with no break at the end... Oh well.
+            this._blurred();
+            break;
+          case 'Escape':
+            this._blurred();
         }
       }
     },

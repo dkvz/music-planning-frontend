@@ -48,6 +48,7 @@
                 <DkAutocomplete :suggestions="instruments"
                   placeholder="Votre instrument..."
                   :selected="selectedInstrument"
+                  auto-scroll-to 
                   @item-selected="instrumentSelected">
                 </DkAutocomplete>
               </div>

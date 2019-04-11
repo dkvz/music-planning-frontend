@@ -96,6 +96,11 @@ Example from the code:
   :key="index">
 ```
 
+## Focus on autocompletes
+We need to scroll the focused autocomplete element to top on mobile only.
+
+I think I can use `document.documentElement.clientWidth` for a specific minimum size (gives out a Number) of 600.
+
 # More notes
 * There's a shorthand for applying preventDefault to form submit events declaratively.
 
