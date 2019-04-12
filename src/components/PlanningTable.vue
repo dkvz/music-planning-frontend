@@ -11,22 +11,22 @@
       <thead>
         <tr>
           <th scope="col">Nom</th>
-          <th scope="col">Date création</th>
+          <th scope="col" class="d-none d-sm-block">Date création</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-bind:class="{'d-none': !showForm}">
           <th scope="row">
-            <input type="text" :disabled="saving" required placeholder="Nom du planning" ref="nameInput" v-model="planningName">
+            <input class="form-control" type="text" :disabled="saving" required placeholder="Nom du planning" ref="nameInput" v-model="planningName">
           </th>
-          <td></td>
+          <td class="d-none d-sm-block"></td>
           <td class="text-right">
             <rotate-loader class="p-spinner" :loading="saving"></rotate-loader>
-            <button class="btn btn-success mr-1" :disabled="saving" aria-label="Enregistrer" title="Enregistrer" type="submit">
+            <button class="btn btn-success btn-sm mr-1" :disabled="saving" aria-label="Enregistrer" title="Enregistrer" type="submit">
               <font-awesome-icon icon="save" />
             </button>
-            <button class="btn btn-danger" :disabled="saving" aria-label="Annuler" title="Annuler" type="reset" @click="hideForm">
+            <button class="btn btn-danger btn-sm" :disabled="saving" aria-label="Annuler" title="Annuler" type="reset" @click="hideForm">
               <font-awesome-icon icon="times-circle" />
             </button>
           </td>

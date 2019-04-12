@@ -38,7 +38,7 @@
         <button class="btn btn-primary mr-2" @click="addPresence">
           OK
         </button>
-        <button class="btn btn-secondary" @click="$refs.presenceModal.hide()">
+        <button class="btn btn-secondary" type="button" @click="$refs.presenceModal.hide()">
           Annuler
         </button>
       </template>

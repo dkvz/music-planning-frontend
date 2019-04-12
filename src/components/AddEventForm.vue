@@ -35,7 +35,7 @@
     </div>
     <div class="text-right">
       <button class="btn btn-primary mr-2" type="submit">Enregistrer</button>
-      <button class="btn btn-warning" @click="cancel">Annuler</button>
+      <button class="btn btn-warning" type="button" @click="cancel">Annuler</button>
     </div>
   </form>
 </template>
