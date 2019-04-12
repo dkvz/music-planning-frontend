@@ -5,7 +5,7 @@
         {{ name }}
       </router-link>
     </th>
-    <td class="d-none d-sm-block">
+    <td class="d-none d-sm-table-cell">
       {{ creationDate.toLocaleDateString() }}
     </td>
     <td class="text-right">

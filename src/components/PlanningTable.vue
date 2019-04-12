@@ -11,7 +11,7 @@
       <thead>
         <tr>
           <th scope="col">Nom</th>
-          <th scope="col" class="d-none d-sm-block">Date création</th>
+          <th scope="col" class="d-none d-sm-table-cell">Date création</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
           <th scope="row">
             <input class="form-control" type="text" :disabled="saving" required placeholder="Nom du planning" ref="nameInput" v-model="planningName">
           </th>
-          <td class="d-none d-sm-block"></td>
+          <td class="d-none d-sm-table-cell"></td>
           <td class="text-right">
             <rotate-loader class="p-spinner" :loading="saving"></rotate-loader>
             <button class="btn btn-success btn-sm mr-1" :disabled="saving" aria-label="Enregistrer" title="Enregistrer" type="submit">
