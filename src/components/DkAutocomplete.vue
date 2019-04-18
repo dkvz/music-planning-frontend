@@ -51,10 +51,19 @@ export default {
     label: String,
     selected: String,
     autoScrollTo: Boolean,
-    scroller: Object
+    scroller: Object,
+    forceSelection: Boolean
   },
   methods: {
     _blurred: function() {
+      // If nothing was selected, select default.
+      // Optional behavior set by the 
+      // "forceSelection" prop.
+      if (this.forceSelection && !this.selectedCode) {
+        // Force value to null just in case:
+        this._deselect();
+        this.value = this.suggestions[0].name;
+      }
       setTimeout(() => {
         this.listVisible = false;
         this.scrolledTo = false;
@@ -69,8 +78,7 @@ export default {
         }
       // Cancel selected code:
       if (this.selectedCode) {
-        this.selectedCode = null;
-        this.$emit('item-selected', {code: null, name: null});
+        this._deselect();
       }
       this.highlighted = -1;
       if (this.value) {
@@ -138,6 +146,10 @@ export default {
       this.selectedCode = e.target.getAttribute('data-code');
       this.value = e.target.getAttribute('data-name');
       this.$emit('item-selected', {name: this.value, code: this.selectedCode});
+    },
+    _deselect: function() {
+      this.selectedCode = null;
+      this.$emit('item-selected', {code: null, name: null});
     }
   },
   mounted: function() {

@@ -30,6 +30,7 @@
             label="Instrument" 
             placeholder="Entrez instrument..."
             auto-scroll-to 
+            force-selection 
             @item-selected="setSelectedInstrument">
           </DkAutocomplete>
         </form>
@@ -59,7 +60,8 @@
             class="col-lg-6"
             label="Votre instrument" 
             placeholder="Entrez instrument..."
-            auto-scroll-to
+            auto-scroll-to 
+            force-selection 
             @item-selected="setSelectedInstrument">
           </DkAutocomplete>
         </div>
