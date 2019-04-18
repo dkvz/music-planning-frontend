@@ -419,6 +419,14 @@ export default {
       // My awesome ugly array of refs to Event components comes into 
       // play now:
       res.presences = this.$refs.evtComponents.map(e => e.getValue());
+      if (res.presences.some(p => p.instrument_code === 'inco' && p.presence)) {
+        // Some instruments are set to "Unknown":
+        if (!confirm(`Un ou plusieurs instruments sélectionné(s) pour au moins un évènement est placé sur "Inconnu", c'est normal?\n\nEn fait il faut sélectionner un des instruments dans la liste des suggestions ou ça sélectionne "Inconnu" d'office.\nContinuer quand même avec des instruments inconnus?\n\nCe message est beaucoup trop long faut faire quelque chose.`)) {
+            this.loading = false;
+            return;
+          }
+      }
+
       // I thought I needed to pass the res object but I actually need
       // its properties. Oh well...
       api.postAllPlanning(

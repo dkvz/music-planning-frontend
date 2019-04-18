@@ -124,6 +124,10 @@ There was an example of this in router.js originally that looked like so:
 - [x] Remove the HelloWorld component, it's imported in several places
 - [x] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [x] Add a refresh button for the PlanningList component
+- [ ] In Planning.vue -> submitAllPresences - Add a better modal when an instrument is set to unknown. Actually create a promise based modal that can be used to remplace window.confirm everywhere I'm using it
+- [ ] I should show another warning modal when someone clicked to send presences but is actually not marked present anywhere. That could be intentional but it's also a little weird.
+- [ ] We're just showing a blank page when a route isn't found, that could probably be improved
+- [ ] I think there's a way to format strings correctly on multiple lines, now would be a good time to just do that
 - [ ] Lots of repetitive code can be refactored both in api.js and any component calling the data fetching methods from api.js
 - [ ] Write a recap of interesting Vue concepts and lessons learned -  I don't know if I'm doing something wrong but there's a LOT of divs in my HTML
 - [ ] A lot of duplicated code would be fixed by using returning Promises from api.js and using .finally() - See all the duplicate setting loading to false
