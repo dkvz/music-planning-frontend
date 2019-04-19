@@ -49,6 +49,7 @@
                   placeholder="Votre instrument..."
                   :selected="selectedInstrument"
                   auto-scroll-to 
+                  force-selection 
                   @item-selected="instrumentSelected">
                 </DkAutocomplete>
               </div>

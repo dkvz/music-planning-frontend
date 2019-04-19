@@ -124,6 +124,7 @@ There was an example of this in router.js originally that looked like so:
 - [x] Remove the HelloWorld component, it's imported in several places
 - [x] Clicking a link doesn't close the mobile menu, I think there's a specific Bootstrap data-* argument for this
 - [x] Add a refresh button for the PlanningList component
+- [ ] Add a help page - make it lazy loaded
 - [ ] In Planning.vue -> submitAllPresences - Add a better modal when an instrument is set to unknown. Actually create a promise based modal that can be used to remplace window.confirm everywhere I'm using it
 - [ ] I should show another warning modal when someone clicked to send presences but is actually not marked present anywhere. That could be intentional but it's also a little weird.
 - [ ] We're just showing a blank page when a route isn't found, that could probably be improved
