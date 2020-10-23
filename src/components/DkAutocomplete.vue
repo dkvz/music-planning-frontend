@@ -67,7 +67,7 @@ export default {
       setTimeout(() => {
         this.listVisible = false;
         this.scrolledTo = false;
-      }, 150);
+      }, 350);
     },
     _keyup: function(e) {
       // Ignore what we'll treat with keydown:
