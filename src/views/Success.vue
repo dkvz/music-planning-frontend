@@ -6,9 +6,9 @@
       </h1>
       <img class="tournage" src="@/assets/chapocut.png" alt="Chapeau qui tourne">
       <hr>
-      <p class="lead">Pour modifier quoi que ce soit il faut aller râler auprès de David.</p>
+      <p class="lead">Pour modifier quoi que ce soit il faut aller râler sur le groupe WhatsApp mais pas pour dire qu'en fait vous allez être absent parce qu'on a dit de plus faire ça si possible, merci bien.</p>
       <hr>
-      <p>Vous pouvez fermer cette page.</p>
+      <p>Vous pouvez fermer cette page et je vous conseille de le faire parce que le chapeau qui tourne utilise de la batterie.</p>
     </div>
   </div>
 </template>

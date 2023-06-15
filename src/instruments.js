@@ -99,6 +99,10 @@ const instruments = [
     code: 'perc'
   },
   {
+    name: 'Batterie',
+    code: 'batt'
+  },
+  {
     name: 'Grosse caisse',
     code: 'groc'
   },
@@ -149,6 +153,10 @@ const instruments = [
   {
     name: 'Chapeau Chinois',
     code: 'chin'
+  },
+  {
+    name: 'Triangle',
+    code: 'tria'
   }
 ];
 
