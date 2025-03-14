@@ -2,7 +2,7 @@
   <div class="row" :class="className">
 
     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-      <dir :class="'card no-padding ' + categoryClass">
+      <div :class="'card no-padding ' + categoryClass">
         <div class="card-header event-header">
           <h4>{{ name }}</h4>
           <div v-if="isAuthenticated">
@@ -18,7 +18,7 @@
           <h5 class="card-title">Date: {{ formattedDate }}</h5>
           <p class="card-text">{{ description }}</p>
         </div>
-      </dir>
+      </div>
     </div>
 
     <div class="col col-lg-1 d-none d-sm-none d-md-none d-lg-block"></div>
