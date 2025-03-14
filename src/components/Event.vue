@@ -61,7 +61,7 @@
               </button>
             </div>
 
-            <div class="col col-sm-12 col-xs-12 col-md-6 col-lg-4"
+            <div class="col col-sm-12 col-xs-12 col-md-6 col-lg-4 p-2"
               v-for="(instrumentGroup, index) in orderedPresences" 
               :key="index">
               <strong>{{ instrumentGroup.name }}</strong>
@@ -79,6 +79,23 @@
                 </li>
               </ul>
             </div>
+            <div v-if="hasAbsents" class="bg-secondary col col-sm-12 col-xs-12 col-md-6 col-lg-4 p-2">
+              <strong class="text-light">Absents</strong>
+              <ul class="presence-list text-light">
+                <li v-for="absent in orderedAbsents" :key="absent.id">
+                  <span>{{ absent.name }}</span>
+                  <button 
+                    v-if="isAuthenticated"
+                    class="btn-semi-small text-danger" 
+                    :data-pid="absent.id" 
+                    @click="removePresence"
+                    title="Effacer">
+                    <font-awesome-icon icon="trash" size="xs" />
+                  </button>
+                </li>
+              </ul>
+            </div>
+
 
           </div>
 
@@ -213,8 +230,6 @@ export default {
           // -> We need to resolve the instrument code to
           // an instrument.
           // I made a terrible code-to-name lookup table.
-          // If the person is marked as absent we completely
-          // ignore them here.
           if (p.presence) {
             let found = false;
             for (let instr of res) {
@@ -246,8 +261,25 @@ export default {
     totalPresences: function() {
       if (this.presences) return this.presences.filter(p => p.presence).length;
       else return 0;
+    },
+    orderedAbsents: function() {
+      if (this.presences) {
+        const abs = this.presences.filter(p => !p.presence);
+        abs.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        });
+        return abs;
+      }
+      else return [];
+    },
+    hasAbsents: function() {
+      if (this.presences) return this.presences.some(p => !p.presence);
+      return false;
     }
-  }
+  },
+  
 }
 </script>
 
