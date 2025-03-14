@@ -44,6 +44,23 @@
         </button>
       </template>
     </Modal>
+    <Modal ref="helpModal">
+      <template v-slot:header>
+        <strong>Heu je dois faire quoi</strong>
+      </template>
+      <template v-slot:main>
+        <p>Vous avez devant vous un planning avec un ou plusieurs événements distincts.</p>
+        <ol>
+          <li>Entrez votre nom et votre instrument tout au dessus (laisser instrument vide est OK) ;</li>
+          <li>Descendez pour afficher les présences de chaque événement (<b>pitet qu'il n'y en a qu'un seul</b>) ;</li>
+          <li>Cochez la case présence le cas échéant qui va bien pour chaque événement, sinon laissez-là comme ça ;</li>
+          <li>Descendez tout en bas et cliquez sur l'énorme bouton bleu.</li>
+        </ol>
+      </template>
+      <template v-slot:footer>
+        <button class="btn btn-secondary" @click="$refs.helpModal.hide()">Fermer</button>
+      </template>
+    </Modal>
     <DkLoader :loading="loading"></DkLoader>
     <h1 v-if="planningName" class="planning-title">Planning: {{ planningName }}</h1>
     <transition name="fade">
@@ -55,6 +72,11 @@
       <div v-if="!isAuthenticated" class="card mb-4">
         <div class="card-header">Vous êtes qui?</div>
         <div class="card-body row">
+          <div class="col-lg-12 text-center mb-2">
+            <button class="btn btn-primary" @click="showHelp" title="Aidez-moi je comprends rien">
+              <font-awesome-icon icon="info-circle" />&nbsp;Heu, je dois faire quoi??
+            </button>
+          </div>
           <NameInput ref="mainNameInput" class="col-lg-6"></NameInput>
           <DkAutocomplete :suggestions="instruments" 
             class="col-lg-6"
@@ -159,6 +181,9 @@ export default {
       // Scroll to top:
       this.scrollToTop();
       if (autoHide) setTimeout(() => this.showMessage(''), 5000);
+    },
+    showHelp: function() {
+      this.$refs.helpModal.show();
     },
     scrollToTop: function() {
       window.scrollTo(0, 0);

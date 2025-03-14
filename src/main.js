@@ -12,7 +12,8 @@ import {
   faEdit,
   faFileExport,
   faSync,
-  faCopy
+  faCopy,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import RotateLoader from 'vue-spinner/src/RotateLoader.vue';
@@ -25,7 +26,8 @@ library.add(
   faEdit, 
   faFileExport, 
   faSync,
-  faCopy
+  faCopy,
+  faInfoCircle
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
